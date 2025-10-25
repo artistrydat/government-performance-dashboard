@@ -1,0 +1,11 @@
+node_modules
+dist
+build
+coverage
+*.md
+*.yml
+*.yaml
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+tsconfig.tsbuildinfo

@@ -1,0 +1,21 @@
+
+> web@1.0.0 build
+> tsc && vite build
+
+vite v4.5.14 building for production...
+transforming...
+
+╭── 🌼[35m daisyUI 3.9.4 [0mhttps://daisyui.com
+│
+├── [2m2[0m themes are enabled. How to add more themes:
+│   https://daisyui.com/docs/themes
+│
+╰── [32m💚 Support daisyUI project[0m: https://opencollective.com/daisyui
+
+✓ 31 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.48 kB │ gzip:  0.32 kB
+dist/assets/index-2251d734.css   20.13 kB │ gzip:  4.21 kB
+dist/assets/index-b13c243a.js   144.36 kB │ gzip: 46.29 kB │ map: 351.06 kB
+✓ built in 2.92s
