@@ -5,7 +5,7 @@
 export function formatCurrency(amount) {
     return new Intl.NumberFormat('en-US', {
         style: 'currency',
-        currency: 'USD'
+        currency: 'USD',
     }).format(amount);
 }
 /**
@@ -15,7 +15,7 @@ export function formatDate(timestamp) {
     return new Date(timestamp).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
-        day: 'numeric'
+        day: 'numeric',
     });
 }
 /**
@@ -25,19 +25,19 @@ export function calculateHealthScore(status, risks) {
     let baseScore = 100;
     // Adjust based on project status
     const statusMultipliers = {
-        'planned': 1.0,
-        'active': 0.9,
+        planned: 1.0,
+        active: 0.9,
         'at-risk': 0.7,
-        'delayed': 0.6,
-        'completed': 1.0
+        delayed: 0.6,
+        completed: 1.0,
     };
     baseScore *= statusMultipliers[status] || 1.0;
     // Adjust based on risks
     const riskMultipliers = {
-        'low': 0.95,
-        'medium': 0.85,
-        'high': 0.7,
-        'critical': 0.5
+        low: 0.95,
+        medium: 0.85,
+        high: 0.7,
+        critical: 0.5,
     };
     risks.forEach(risk => {
         const multiplier = riskMultipliers[risk.severity] || 1.0;

@@ -13,7 +13,7 @@ This unified approach combines what would traditionally be separate backend and 
 **Decision:** N/A - Greenfield project with specific technology requirements
 
 **Constraints:**
-- Must use Vite + React/TypeScript for frontend
+- Must use Vite 6 + React/TypeScript for frontend
 - Must use Convex for backend data architecture
 - Must integrate external Llama AI models
 - Must support Arabic/English localization

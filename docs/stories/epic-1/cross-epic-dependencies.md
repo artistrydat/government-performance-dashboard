@@ -11,7 +11,14 @@
 - [ ] Basic dashboard framework
 - [ ] User role management
 
+REPLACE
 ## Required for Epic 4
 - [ ] Risk data model
 - [ ] Project data for AI predictions
 - [ ] Backend function framework
+
+## Plan to implement Cross-Epic Dependencies before Epic 2
+- [ ] Create a shared contracts document
+- [ ] Implement preliminary shared data layer
+- [ ] Initialize authentication mocks
+- [ ] Create basic frontend skeleton

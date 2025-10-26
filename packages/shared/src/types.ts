@@ -23,3 +23,71 @@ export interface BaseEntity {
   createdAt: number;
   updatedAt: number;
 }
+
+// Project Data Model
+export interface Project extends BaseEntity {
+  name: string;
+  description: string;
+  status: ProjectStatus;
+  budget: number;
+  timeline: Timeline;
+  portfolioId?: string;
+  ownerId?: string;
+  healthScore: number;
+  riskLevel: RiskSeverity;
+  tags: string[];
+}
+
+export interface CreateProjectInput {
+  name: string;
+  description: string;
+  status: ProjectStatus;
+  budget: number;
+  timeline: Timeline;
+  portfolioId?: string;
+  ownerId?: string;
+  healthScore: number;
+  riskLevel: RiskSeverity;
+  tags: string[];
+}
+
+export interface UpdateProjectInput {
+  name?: string;
+  description?: string;
+  status?: ProjectStatus;
+  budget?: number;
+  timeline?: Timeline;
+  portfolioId?: string;
+  ownerId?: string;
+  healthScore?: number;
+  riskLevel?: RiskSeverity;
+  tags?: string[];
+}
+
+// Portfolio Data Model
+export interface Portfolio extends BaseEntity {
+  name: string;
+  description: string;
+  ownerId: string;
+  healthScore: number;
+}
+
+// Risk Data Model
+export interface Risk extends BaseEntity {
+  projectId: string;
+  title: string;
+  description: string;
+  severity: RiskSeverity;
+  status: RiskStatus;
+  probability: number;
+  impact: number;
+  mitigationPlan?: string;
+}
+
+// User Data Model
+export interface User extends BaseEntity {
+  name: string;
+  email: string;
+  role: UserRole;
+  department: string;
+}

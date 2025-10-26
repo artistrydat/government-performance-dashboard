@@ -12,10 +12,11 @@ transforming...
 │
 ╰── [32m💚 Support daisyUI project[0m: https://opencollective.com/daisyui
 
-✓ 31 modules transformed.
+✓ 49 modules transformed.
 rendering chunks...
 computing gzip size...
-dist/index.html                   0.48 kB │ gzip:  0.32 kB
-dist/assets/index-2251d734.css   20.13 kB │ gzip:  4.21 kB
-dist/assets/index-b13c243a.js   144.36 kB │ gzip: 46.29 kB │ map: 351.06 kB
-✓ built in 2.92s
+dist/index.html                      0.48 kB │ gzip:  0.31 kB
+dist/assets/index-e4408ff2.css      49.14 kB │ gzip:  8.06 kB
+dist/assets/Dashboard-80ab4c17.js    5.85 kB │ gzip:  1.44 kB │ map:  11.98 kB
+dist/assets/index-b071aafc.js      151.71 kB │ gzip: 49.00 kB │ map: 375.45 kB
+✓ built in 4.08s

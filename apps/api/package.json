@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "convex dev",
     "deploy": "convex deploy",
+    "build": "tsc",
     "type-check": "tsc --noEmit",
     "test": "vitest"
   },
@@ -13,8 +14,8 @@
     "convex": "^1.7.0"
   },
   "devDependencies": {
-    "@types/node": "^20.5.0",
-    "typescript": "^5.0.2",
-    "vitest": "^0.34.0"
+    "@types/node": "^20.10.0",
+    "typescript": "^5.2.2",
+    "vitest": "^1.0.4"
   }
 }

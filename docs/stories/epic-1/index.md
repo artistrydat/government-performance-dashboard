@@ -8,6 +8,7 @@
 - [Risk Mitigation](./risk-mitigation.md)
 - [Definition of Done](./definition-of-done.md)
 - [Next Steps After Epic 1](./next-steps-after-epic-1.md)
+- [Story 1.6.2: CI/CD Pipeline](./shards/story-1.6.2-ci-cd-pipeline.md)
 
 ---
 *Created: 10/25/2025*  

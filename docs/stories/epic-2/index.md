@@ -8,6 +8,7 @@
 - [Risk Mitigation](./risk-mitigation.md)
 - [Definition of Done](./definition-of-done.md)
 - [Next Steps After Epic 2](./next-steps-after-epic-2.md)
+- [Epic 2 PO Shard](./shards/story-2-po.md)
 
 ---
 *Created: 10/25/2025*  
