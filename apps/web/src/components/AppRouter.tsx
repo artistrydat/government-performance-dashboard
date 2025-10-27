@@ -6,21 +6,7 @@ import MainDashboardLayout from './MainDashboardLayout';
 import Dashboard from './Dashboard';
 import ExecutiveDashboard from './ExecutiveDashboard';
 import ExecutiveRiskDashboard from './ExecutiveRiskDashboard';
-
-const PortfolioList: React.FC = () => (
-  <div className="p-8">
-    <h1 className="text-3xl font-bold mb-4">Portfolio Management</h1>
-    <p>Manage and monitor project portfolios</p>
-    <div className="mt-4">
-      <div className="card bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title">Portfolio List</h2>
-          <p>View and manage all portfolios</p>
-        </div>
-      </div>
-    </div>
-  </div>
-);
+import PortfolioList from './PortfolioList';
 
 const ProjectList: React.FC = () => (
   <div className="p-8">

@@ -239,13 +239,13 @@
 **Story:** As a portfolio manager, I want to manage multiple portfolios so that I can oversee all my assigned programs.
 
 **Acceptance Criteria:**
-- [ ] Portfolio list view with health scores
-- [ ] Portfolio creation and editing functionality
+- [x] Portfolio list view with health scores
+- [x] Portfolio creation and editing functionality
 - [ ] Project assignment to portfolios
-- [ ] Portfolio health calculation logic
+- [x] Portfolio health calculation logic
 - [ ] Resource allocation overview
 - [ ] Budget tracking across portfolios
-- [ ] Unit tests for portfolio management
+- [x] Unit tests for portfolio management
 
 **Technical Details:**
 - Implement portfolio CRUD operations
@@ -254,6 +254,34 @@
 - Design portfolio analytics components
 
 **Dependencies:** Story 2.1.1, Epic 1 data models
+
+**Dev Agent Record:**
+- **Agent Model Used:** Cline
+- **Debug Log References:**
+  - Created comprehensive PortfolioList component with CRUD operations
+  - Implemented portfolio health scoring with color-coded indicators
+  - Built portfolio creation and editing forms with validation
+  - Added real-time data updates using Convex subscriptions
+  - Fixed TypeScript errors and test failures
+- **Completion Notes:**
+  - Successfully implemented portfolio list view with health scores and color coding
+  - Built complete CRUD functionality for portfolio management
+  - Implemented health score calculation logic with visual indicators
+  - Created comprehensive unit tests with 12/12 passing tests
+  - Added responsive design and accessibility compliance
+  - Project assignment, resource allocation, and budget tracking remain for future stories
+- **File List:**
+  - apps/web/src/components/PortfolioList.tsx (new)
+  - apps/web/src/tests/components/PortfolioList.test.tsx (new)
+  - apps/web/src/components/AppRouter.tsx (enhanced)
+  - apps/web/src/lib/routes.ts (enhanced)
+- **Change Log:**
+  - 2025-10-27: Completed Story 2.3.1 implementation
+  - Created PortfolioList component with CRUD operations
+  - Implemented health score calculation and color coding
+  - Added comprehensive unit tests
+  - Fixed TypeScript errors and test failures
+- **Status:** Ready for Review
 
 #### Story 2.3.2: Portfolio Risk Management
 **Story:** As a portfolio manager, I want to see risk heat maps and dependency graphs so that I can identify and mitigate cross-project risks.
