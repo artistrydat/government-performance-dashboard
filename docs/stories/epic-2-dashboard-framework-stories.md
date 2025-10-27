@@ -63,12 +63,12 @@
 **Story:** As a user, I want to see only the navigation items relevant to my role so that I'm not confused by irrelevant options.
 
 **Acceptance Criteria:**
-- [ ] Executive role sees executive dashboard, compliance reports
-- [ ] Portfolio manager sees portfolio management, risk management, compliance
-- [ ] Project officer sees project management, risk tracking
-- [ ] Route protection prevents unauthorized access
-- [ ] Navigation updates dynamically based on user role
-- [ ] Unit tests for role-based navigation logic
+- [x] Executive role sees executive dashboard, compliance reports
+- [x] Portfolio manager sees portfolio management, risk management, compliance
+- [x] Project officer sees project management, risk tracking
+- [x] Route protection prevents unauthorized access
+- [x] Navigation updates dynamically based on user role
+- [x] Unit tests for role-based navigation logic
 
 **Technical Details:**
 - Implement role-based route configuration
@@ -77,6 +77,41 @@
 - Test all role combinations
 
 **Dependencies:** Story 2.1.1
+
+**Dev Agent Record:**
+- **Agent Model Used:** Cline
+- **Debug Log References:**
+  - Implemented role-based route configuration in routes.ts
+  - Created ProtectedRoute component for navigation guards
+  - Built AppRouter component with role-based route mapping
+  - Updated MainDashboardLayout to use React Router hooks
+  - Enhanced DashboardSidebar with dynamic navigation based on user role
+  - Fixed test suite to wrap components in MemoryRouter
+- **Completion Notes:**
+  - Successfully implemented comprehensive role-based navigation system
+  - Created route protection middleware with permission checking
+  - All four user roles (executive, portfolio_manager, project_officer, admin) have appropriate navigation
+  - Route protection prevents unauthorized access to role-specific pages
+  - Navigation dynamically updates based on authenticated user role
+  - All unit tests passing for role-based navigation logic
+- **File List:**
+  - apps/web/src/lib/routes.ts (new)
+  - apps/web/src/components/ProtectedRoute.tsx (new)
+  - apps/web/src/components/AppRouter.tsx (new)
+  - apps/web/src/components/MainDashboardLayout.tsx (enhanced)
+  - apps/web/src/components/DashboardSidebar.tsx (enhanced)
+  - apps/web/src/tests/routes.test.ts (new)
+  - apps/web/src/tests/components/MainDashboardLayout.test.tsx (updated)
+  - apps/web/package.json (updated with react-router-dom dependency)
+- **Change Log:**
+  - 2025-10-27: Completed Story 2.1.2 implementation
+  - Installed React Router dependencies
+  - Implemented role-based route configuration
+  - Created navigation guard components
+  - Set up permission checking middleware
+  - Tested all role combinations
+  - Updated existing tests to work with React Router
+- **Status:** Ready for Review
 
 ### Phase 2.2: Executive Dashboard
 **Duration:** 5-6 days

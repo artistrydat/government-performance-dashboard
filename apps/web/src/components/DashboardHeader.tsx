@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
 
 const DashboardHeader: React.FC = () => {
@@ -77,7 +78,7 @@ const DashboardHeader: React.FC = () => {
                 </div>
               </li>
               <li>
-                <a href="/profile" aria-label="View profile">
+                <Link to="/profile" aria-label="View profile">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4"
@@ -93,10 +94,10 @@ const DashboardHeader: React.FC = () => {
                     />
                   </svg>
                   Profile
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/settings" aria-label="View settings">
+                <Link to="/profile" aria-label="View settings">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4"
@@ -118,7 +119,7 @@ const DashboardHeader: React.FC = () => {
                     />
                   </svg>
                   Settings
-                </a>
+                </Link>
               </li>
               <li>
                 <button

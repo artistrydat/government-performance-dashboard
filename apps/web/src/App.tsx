@@ -1,10 +1,8 @@
-import { Suspense, lazy } from 'react';
+import { Suspense } from 'react';
 import { useAuth } from './lib/auth';
 import ErrorBoundary from './components/ErrorBoundary';
 import { LoginForm } from './components/LoginForm';
-
-// Lazy load the Dashboard component for code splitting
-const Dashboard = lazy(() => import('./components/Dashboard'));
+import AppRouter from './components/AppRouter';
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -22,7 +20,7 @@ function App() {
             </div>
           }
         >
-          <Dashboard />
+          <AppRouter />
         </Suspense>
       ) : (
         <div className="min-h-screen bg-base-200 flex items-center justify-center p-4">
