@@ -42,6 +42,14 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
     description: 'Manage and monitor project portfolios',
     showInNavigation: true,
   },
+  portfolioRisks: {
+    path: '/portfolios/risks',
+    component: 'PortfolioRiskManagement',
+    requiredRole: 'portfolio_manager',
+    title: 'Portfolio Risk Management',
+    description: 'Risk heat maps and dependency analysis across portfolios',
+    showInNavigation: true,
+  },
   portfolioDetail: {
     path: '/portfolios/:id',
     component: 'PortfolioDetail',

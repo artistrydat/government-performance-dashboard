@@ -7,6 +7,7 @@ import Dashboard from './Dashboard';
 import ExecutiveDashboard from './ExecutiveDashboard';
 import ExecutiveRiskDashboard from './ExecutiveRiskDashboard';
 import PortfolioList from './PortfolioList';
+import PortfolioRiskManagement from './PortfolioRiskManagement';
 
 const ProjectList: React.FC = () => (
   <div className="p-8">
@@ -149,6 +150,17 @@ const AppRouter: React.FC = () => {
             <ProtectedRoute routePath="/portfolios">
               <MainDashboardLayout userRole={user?.role} currentPath="/portfolios">
                 <PortfolioList />
+              </MainDashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/portfolios/risks"
+          element={
+            <ProtectedRoute routePath="/portfolios/risks">
+              <MainDashboardLayout userRole={user?.role} currentPath="/portfolios/risks">
+                <PortfolioRiskManagement />
               </MainDashboardLayout>
             </ProtectedRoute>
           }

@@ -287,12 +287,12 @@
 **Story:** As a portfolio manager, I want to see risk heat maps and dependency graphs so that I can identify and mitigate cross-project risks.
 
 **Acceptance Criteria:**
-- [ ] Portfolio risk heat map with project-level details
-- [ ] Dependency network graphs showing project relationships
-- [ ] Risk impact analysis across portfolio
-- [ ] Resource optimization suggestions
-- [ ] Risk mitigation planning interface
-- [ ] Real-time risk updates
+- [x] Portfolio risk heat map with project-level details
+- [x] Dependency network graphs showing project relationships
+- [x] Risk impact analysis across portfolio
+- [x] Resource optimization suggestions
+- [x] Risk mitigation planning interface
+- [x] Real-time risk updates
 
 **Technical Details:**
 - Implement dependency graph visualization
@@ -301,6 +301,44 @@
 - Design portfolio risk reporting
 
 **Dependencies:** Story 2.3.1
+
+**Dev Agent Record:**
+- **Agent Model Used:** Cline
+- **Debug Log References:**
+  - Created comprehensive PortfolioRiskManagement component with all required features
+  - Implemented portfolio risk heat map with color-coded risk levels and interactive selection
+  - Built dependency network graph showing portfolio-project relationships and risk propagation
+  - Developed risk impact analysis with scoring system and detailed metrics
+  - Added resource optimization suggestions with AI-powered allocation recommendations
+  - Created risk mitigation planning interface for high and critical risks
+  - Implemented real-time data updates using Convex subscriptions
+  - Added comprehensive tab navigation system for different risk management views
+- **Completion Notes:**
+  - Successfully implemented all acceptance criteria for portfolio risk management
+  - Portfolio risk heat map displays risk levels across all portfolios with color coding and interactive selection
+  - Dependency network graph shows portfolio-project relationships and risk propagation between projects
+  - Risk impact analysis provides comprehensive scoring with critical/high/medium risk counts and impact scores
+  - Resource optimization suggests budget adjustments based on risk levels and portfolio health
+  - Risk mitigation planning interface shows active plans for high and critical risks with progress tracking
+  - Real-time risk updates implemented using Convex real-time subscriptions
+  - Component integrated into routing system with role-based access control
+  - Comprehensive unit tests created (15 tests) covering all major functionality
+  - Component follows project standards and accessibility guidelines
+- **File List:**
+  - apps/web/src/components/PortfolioRiskManagement.tsx (new)
+  - apps/web/src/tests/components/PortfolioRiskManagement.test.tsx (new)
+  - apps/web/src/lib/routes.ts (enhanced)
+  - apps/web/src/components/AppRouter.tsx (enhanced)
+- **Change Log:**
+  - 2025-10-27: Completed Story 2.3.2 implementation
+  - Created comprehensive PortfolioRiskManagement component with all required features
+  - Implemented portfolio risk heat map with interactive visualization
+  - Built dependency network graph showing project relationships
+  - Developed risk impact analysis and resource optimization
+  - Added risk mitigation planning interface
+  - Integrated component into routing system
+  - Created comprehensive unit tests
+- **Status:** Ready for Review
 
 ### Phase 2.4: Project Officer Dashboard
 **Duration:** 4-5 days
