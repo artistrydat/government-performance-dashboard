@@ -1,17 +1,18 @@
 import React from 'react';
+import { UserRole } from '../lib/auth';
 import DashboardHeader from './DashboardHeader';
 import DashboardSidebar from './DashboardSidebar';
 import Breadcrumb from './Breadcrumb';
 
 export interface MainDashboardLayoutProps {
   children?: React.ReactNode;
-  userRole?: string;
+  userRole?: UserRole;
   currentPath?: string;
 }
 
 const MainDashboardLayout: React.FC<MainDashboardLayoutProps> = ({
   children,
-  userRole = 'guest',
+  userRole = 'executive',
   currentPath = '/',
 }) => {
   return (

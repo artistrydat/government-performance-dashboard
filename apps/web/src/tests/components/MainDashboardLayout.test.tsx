@@ -6,7 +6,7 @@ import MainDashboardLayout from '../../components/MainDashboardLayout';
 // Mock the auth hook
 vi.mock('../../lib/auth', () => ({
   useAuth: () => ({
-    user: { name: 'Test User', role: 'admin' },
+    user: { name: 'Test User', role: 'executive' as const },
     logout: vi.fn(),
   }),
 }));
@@ -27,13 +27,13 @@ describe('MainDashboardLayout', () => {
   it('renders sidebar for a given userRole', () => {
     render(
       <MemoryRouter>
-        <MainDashboardLayout userRole="admin">
+        <MainDashboardLayout userRole="executive">
           <div data-testid="child2" />
         </MainDashboardLayout>
       </MemoryRouter>
     );
-    // Admin-specific menu item should be present
-    expect(screen.getAllByText('admin').length).toBeGreaterThan(0);
+    // Executive-specific menu item should be present
+    expect(screen.getAllByText('Executive').length).toBeGreaterThan(0);
   });
 
   it('renders breadcrumb navigation', () => {

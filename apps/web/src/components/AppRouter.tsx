@@ -4,34 +4,7 @@ import { useAuth } from '../lib/auth';
 import { ProtectedRoute } from './ProtectedRoute';
 import MainDashboardLayout from './MainDashboardLayout';
 import Dashboard from './Dashboard';
-
-// Placeholder components for routes that don't exist yet
-const ExecutiveDashboard: React.FC = () => (
-  <div className="p-8">
-    <h1 className="text-3xl font-bold mb-4">Executive Dashboard</h1>
-    <p>High-level portfolio view for executives</p>
-    <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div className="card bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title">Portfolio Health</h2>
-          <p>Overall portfolio performance metrics</p>
-        </div>
-      </div>
-      <div className="card bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title">Risk Overview</h2>
-          <p>High-level risk indicators</p>
-        </div>
-      </div>
-      <div className="card bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title">Compliance Reports</h2>
-          <p>Executive compliance summaries</p>
-        </div>
-      </div>
-    </div>
-  </div>
-);
+import ExecutiveDashboard from './ExecutiveDashboard';
 
 const PortfolioList: React.FC = () => (
   <div className="p-8">
