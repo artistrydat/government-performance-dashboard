@@ -8,21 +8,7 @@ import ExecutiveDashboard from './ExecutiveDashboard';
 import ExecutiveRiskDashboard from './ExecutiveRiskDashboard';
 import PortfolioList from './PortfolioList';
 import PortfolioRiskManagement from './PortfolioRiskManagement';
-
-const ProjectList: React.FC = () => (
-  <div className="p-8">
-    <h1 className="text-3xl font-bold mb-4">Project Management</h1>
-    <p>Manage individual projects</p>
-    <div className="mt-4">
-      <div className="card bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title">Project List</h2>
-          <p>View and manage all projects</p>
-        </div>
-      </div>
-    </div>
-  </div>
-);
+import ProjectList from './ProjectList';
 
 const RiskManagement: React.FC = () => (
   <div className="p-8">
