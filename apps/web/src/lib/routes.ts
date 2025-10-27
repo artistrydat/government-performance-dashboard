@@ -26,6 +26,14 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
     description: 'High-level portfolio view for executives',
     showInNavigation: true,
   },
+  executiveRisks: {
+    path: '/executive/risks',
+    component: 'ExecutiveRiskDashboard',
+    requiredRole: 'executive',
+    title: 'Executive Risk Dashboard',
+    description: 'Comprehensive risk overview for executives',
+    showInNavigation: true,
+  },
   portfolios: {
     path: '/portfolios',
     component: 'PortfolioList',

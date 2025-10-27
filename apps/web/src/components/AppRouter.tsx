@@ -5,6 +5,7 @@ import { ProtectedRoute } from './ProtectedRoute';
 import MainDashboardLayout from './MainDashboardLayout';
 import Dashboard from './Dashboard';
 import ExecutiveDashboard from './ExecutiveDashboard';
+import ExecutiveRiskDashboard from './ExecutiveRiskDashboard';
 
 const PortfolioList: React.FC = () => (
   <div className="p-8">
@@ -140,6 +141,17 @@ const AppRouter: React.FC = () => {
             <ProtectedRoute routePath="/executive">
               <MainDashboardLayout userRole={user?.role} currentPath="/executive">
                 <ExecutiveDashboard />
+              </MainDashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/executive/risks"
+          element={
+            <ProtectedRoute routePath="/executive/risks">
+              <MainDashboardLayout userRole={user?.role} currentPath="/executive/risks">
+                <ExecutiveRiskDashboard />
               </MainDashboardLayout>
             </ProtectedRoute>
           }
