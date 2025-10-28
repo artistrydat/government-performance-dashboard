@@ -1,17 +1,17 @@
 export declare const create: import("convex/server").RegisteredMutation<"public", {
     portfolioId?: import("convex/values").GenericId<"portfolios"> | undefined;
     ownerId?: import("convex/values").GenericId<"users"> | undefined;
-    status: "active" | "planned" | "at-risk" | "delayed" | "completed";
     name: string;
     description: string;
+    status: "planned" | "active" | "at-risk" | "delayed" | "completed";
     budget: number;
     timeline: {
         startDate: number;
         endDate: number;
         milestones: {
             date: number;
-            status: string;
             name: string;
+            status: string;
         }[];
     };
     healthScore: number;
@@ -25,17 +25,17 @@ export declare const get: import("convex/server").RegisteredQuery<"public", {
     _creationTime: number;
     portfolioId?: import("convex/values").GenericId<"portfolios"> | undefined;
     ownerId?: import("convex/values").GenericId<"users"> | undefined;
-    status: "active" | "planned" | "at-risk" | "delayed" | "completed";
     name: string;
     description: string;
+    status: "planned" | "active" | "at-risk" | "delayed" | "completed";
     budget: number;
     timeline: {
         startDate: number;
         endDate: number;
         milestones: {
             date: number;
-            status: string;
             name: string;
+            status: string;
         }[];
     };
     healthScore: number;
@@ -49,17 +49,17 @@ export declare const list: import("convex/server").RegisteredQuery<"public", {},
     _creationTime: number;
     portfolioId?: import("convex/values").GenericId<"portfolios"> | undefined;
     ownerId?: import("convex/values").GenericId<"users"> | undefined;
-    status: "active" | "planned" | "at-risk" | "delayed" | "completed";
     name: string;
     description: string;
+    status: "planned" | "active" | "at-risk" | "delayed" | "completed";
     budget: number;
     timeline: {
         startDate: number;
         endDate: number;
         milestones: {
             date: number;
-            status: string;
             name: string;
+            status: string;
         }[];
     };
     healthScore: number;
@@ -69,23 +69,23 @@ export declare const list: import("convex/server").RegisteredQuery<"public", {},
     updatedAt: number;
 }[]>>;
 export declare const listByStatus: import("convex/server").RegisteredQuery<"public", {
-    status: "active" | "planned" | "at-risk" | "delayed" | "completed";
+    status: "planned" | "active" | "at-risk" | "delayed" | "completed";
 }, Promise<{
     _id: import("convex/values").GenericId<"projects">;
     _creationTime: number;
     portfolioId?: import("convex/values").GenericId<"portfolios"> | undefined;
     ownerId?: import("convex/values").GenericId<"users"> | undefined;
-    status: "active" | "planned" | "at-risk" | "delayed" | "completed";
     name: string;
     description: string;
+    status: "planned" | "active" | "at-risk" | "delayed" | "completed";
     budget: number;
     timeline: {
         startDate: number;
         endDate: number;
         milestones: {
             date: number;
-            status: string;
             name: string;
+            status: string;
         }[];
     };
     healthScore: number;
@@ -101,17 +101,17 @@ export declare const listByPortfolio: import("convex/server").RegisteredQuery<"p
     _creationTime: number;
     portfolioId?: import("convex/values").GenericId<"portfolios"> | undefined;
     ownerId?: import("convex/values").GenericId<"users"> | undefined;
-    status: "active" | "planned" | "at-risk" | "delayed" | "completed";
     name: string;
     description: string;
+    status: "planned" | "active" | "at-risk" | "delayed" | "completed";
     budget: number;
     timeline: {
         startDate: number;
         endDate: number;
         milestones: {
             date: number;
-            status: string;
             name: string;
+            status: string;
         }[];
     };
     healthScore: number;
@@ -123,17 +123,17 @@ export declare const listByPortfolio: import("convex/server").RegisteredQuery<"p
 export declare const update: import("convex/server").RegisteredMutation<"public", {
     portfolioId?: import("convex/values").GenericId<"portfolios"> | undefined;
     ownerId?: import("convex/values").GenericId<"users"> | undefined;
-    status: "active" | "planned" | "at-risk" | "delayed" | "completed";
     name: string;
     description: string;
+    status: "planned" | "active" | "at-risk" | "delayed" | "completed";
     budget: number;
     timeline: {
         startDate: number;
         endDate: number;
         milestones: {
             date: number;
-            status: string;
             name: string;
+            status: string;
         }[];
     };
     healthScore: number;
@@ -162,3 +162,4 @@ export declare const getStatistics: import("convex/server").RegisteredQuery<"pub
         critical: number;
     };
 }>>;
+//# sourceMappingURL=projects.d.ts.map

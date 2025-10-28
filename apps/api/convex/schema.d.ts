@@ -2,17 +2,17 @@ declare const _default: import("convex/server").SchemaDefinition<{
     projects: import("convex/server").TableDefinition<import("convex/values").VObject<{
         portfolioId?: import("convex/values").GenericId<"portfolios"> | undefined;
         ownerId?: import("convex/values").GenericId<"users"> | undefined;
-        status: "active" | "planned" | "at-risk" | "delayed" | "completed";
         name: string;
         description: string;
+        status: "planned" | "active" | "at-risk" | "delayed" | "completed";
         budget: number;
         timeline: {
             startDate: number;
             endDate: number;
             milestones: {
                 date: number;
-                status: string;
                 name: string;
+                status: string;
             }[];
         };
         healthScore: number;
@@ -23,32 +23,32 @@ declare const _default: import("convex/server").SchemaDefinition<{
     }, {
         name: import("convex/values").VString<string, "required">;
         description: import("convex/values").VString<string, "required">;
-        status: import("convex/values").VUnion<"active" | "planned" | "at-risk" | "delayed" | "completed", [import("convex/values").VLiteral<"planned", "required">, import("convex/values").VLiteral<"active", "required">, import("convex/values").VLiteral<"at-risk", "required">, import("convex/values").VLiteral<"delayed", "required">, import("convex/values").VLiteral<"completed", "required">], "required", never>;
+        status: import("convex/values").VUnion<"planned" | "active" | "at-risk" | "delayed" | "completed", [import("convex/values").VLiteral<"planned", "required">, import("convex/values").VLiteral<"active", "required">, import("convex/values").VLiteral<"at-risk", "required">, import("convex/values").VLiteral<"delayed", "required">, import("convex/values").VLiteral<"completed", "required">], "required", never>;
         budget: import("convex/values").VFloat64<number, "required">;
         timeline: import("convex/values").VObject<{
             startDate: number;
             endDate: number;
             milestones: {
                 date: number;
-                status: string;
                 name: string;
+                status: string;
             }[];
         }, {
             startDate: import("convex/values").VFloat64<number, "required">;
             endDate: import("convex/values").VFloat64<number, "required">;
             milestones: import("convex/values").VArray<{
                 date: number;
-                status: string;
                 name: string;
+                status: string;
             }[], import("convex/values").VObject<{
                 date: number;
-                status: string;
                 name: string;
+                status: string;
             }, {
                 name: import("convex/values").VString<string, "required">;
                 date: import("convex/values").VFloat64<number, "required">;
                 status: import("convex/values").VString<string, "required">;
-            }, "required", "date" | "status" | "name">, "required">;
+            }, "required", "date" | "name" | "status">, "required">;
         }, "required", "startDate" | "endDate" | "milestones">;
         portfolioId: import("convex/values").VId<import("convex/values").GenericId<"portfolios"> | undefined, "optional">;
         ownerId: import("convex/values").VId<import("convex/values").GenericId<"users"> | undefined, "optional">;
@@ -57,7 +57,7 @@ declare const _default: import("convex/server").SchemaDefinition<{
         tags: import("convex/values").VArray<string[], import("convex/values").VString<string, "required">, "required">;
         createdAt: import("convex/values").VFloat64<number, "required">;
         updatedAt: import("convex/values").VFloat64<number, "required">;
-    }, "required", "status" | "name" | "description" | "budget" | "timeline" | "portfolioId" | "ownerId" | "healthScore" | "riskLevel" | "tags" | "createdAt" | "updatedAt" | "timeline.startDate" | "timeline.endDate" | "timeline.milestones">, {
+    }, "required", "name" | "description" | "status" | "budget" | "timeline" | "portfolioId" | "ownerId" | "healthScore" | "riskLevel" | "tags" | "createdAt" | "updatedAt" | "timeline.startDate" | "timeline.endDate" | "timeline.milestones">, {
         by_status: ["status", "_creationTime"];
         by_portfolio: ["portfolioId", "_creationTime"];
         by_owner: ["ownerId", "_creationTime"];
@@ -85,12 +85,12 @@ declare const _default: import("convex/server").SchemaDefinition<{
     }, {}, {}>;
     risks: import("convex/server").TableDefinition<import("convex/values").VObject<{
         mitigationPlan?: string | undefined;
-        status: "identified" | "monitored" | "mitigated" | "resolved";
-        title: string;
         description: string;
+        status: "identified" | "monitored" | "mitigated" | "resolved";
         createdAt: number;
         updatedAt: number;
         projectId: import("convex/values").GenericId<"projects">;
+        title: string;
         severity: "low" | "medium" | "high" | "critical";
         probability: number;
         impact: number;
@@ -105,17 +105,17 @@ declare const _default: import("convex/server").SchemaDefinition<{
         mitigationPlan: import("convex/values").VString<string | undefined, "optional">;
         createdAt: import("convex/values").VFloat64<number, "required">;
         updatedAt: import("convex/values").VFloat64<number, "required">;
-    }, "required", "status" | "title" | "description" | "createdAt" | "updatedAt" | "projectId" | "severity" | "probability" | "impact" | "mitigationPlan">, {
+    }, "required", "description" | "status" | "createdAt" | "updatedAt" | "projectId" | "title" | "severity" | "probability" | "impact" | "mitigationPlan">, {
         by_project: ["projectId", "_creationTime"];
         by_severity: ["severity", "_creationTime"];
         by_status: ["status", "_creationTime"];
     }, {}, {}>;
     users: import("convex/server").TableDefinition<import("convex/values").VObject<{
         email: string;
-        role: "executive" | "portfolio_manager" | "project_officer";
         name: string;
         createdAt: number;
         updatedAt: number;
+        role: "executive" | "portfolio_manager" | "project_officer";
         department: string;
     }, {
         name: import("convex/values").VString<string, "required">;
@@ -124,9 +124,10 @@ declare const _default: import("convex/server").SchemaDefinition<{
         department: import("convex/values").VString<string, "required">;
         createdAt: import("convex/values").VFloat64<number, "required">;
         updatedAt: import("convex/values").VFloat64<number, "required">;
-    }, "required", "email" | "role" | "name" | "createdAt" | "updatedAt" | "department">, {
+    }, "required", "email" | "name" | "createdAt" | "updatedAt" | "role" | "department">, {
         by_email: ["email", "_creationTime"];
         by_role: ["role", "_creationTime"];
     }, {}, {}>;
 }, true>;
 export default _default;
+//# sourceMappingURL=schema.d.ts.map

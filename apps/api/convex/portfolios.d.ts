@@ -100,17 +100,17 @@ export declare const getWithProjects: import("convex/server").RegisteredQuery<"p
         _creationTime: number;
         portfolioId?: import("convex/values").GenericId<"portfolios"> | undefined;
         ownerId?: import("convex/values").GenericId<"users"> | undefined;
-        status: "active" | "planned" | "at-risk" | "delayed" | "completed";
         name: string;
         description: string;
+        status: "planned" | "active" | "at-risk" | "delayed" | "completed";
         budget: number;
         timeline: {
             startDate: number;
             endDate: number;
             milestones: {
                 date: number;
-                status: string;
                 name: string;
+                status: string;
             }[];
         };
         healthScore: number;
@@ -120,3 +120,4 @@ export declare const getWithProjects: import("convex/server").RegisteredQuery<"p
         updatedAt: number;
     }[];
 }>>;
+//# sourceMappingURL=portfolios.d.ts.map

@@ -11,7 +11,9 @@
 import type * as portfolios from "../portfolios.js";
 import type * as projects from "../projects.js";
 import type * as risks from "../risks.js";
+import type * as userPreferences from "../userPreferences.js";
 import type * as users from "../users.js";
+import type * as validation from "../validation.js";
 
 import type {
   ApiFromModules,
@@ -31,7 +33,9 @@ declare const fullApi: ApiFromModules<{
   portfolios: typeof portfolios;
   projects: typeof projects;
   risks: typeof risks;
+  userPreferences: typeof userPreferences;
   users: typeof users;
+  validation: typeof validation;
 }>;
 declare const fullApiWithMounts: typeof fullApi;
 

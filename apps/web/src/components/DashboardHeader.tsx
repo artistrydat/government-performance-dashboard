@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
+import UserPreferencesModal from './UserPreferences';
 
 const DashboardHeader: React.FC = () => {
   const { user, logout } = useAuth();
+  const [showPreferences, setShowPreferences] = useState(false);
 
   const getRoleDisplayName = (role: string): string => {
     switch (role) {
@@ -97,7 +99,7 @@ const DashboardHeader: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/profile" aria-label="View settings">
+                <button onClick={() => setShowPreferences(true)} aria-label="View settings">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4"
@@ -119,7 +121,7 @@ const DashboardHeader: React.FC = () => {
                     />
                   </svg>
                   Settings
-                </Link>
+                </button>
               </li>
               <li>
                 <button
@@ -148,6 +150,9 @@ const DashboardHeader: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* User Preferences Modal */}
+      <UserPreferencesModal isOpen={showPreferences} onClose={() => setShowPreferences(false)} />
     </header>
   );
 };

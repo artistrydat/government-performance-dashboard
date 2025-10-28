@@ -1,7 +1,7 @@
 export declare const create: import("convex/server").RegisteredMutation<"public", {
     email: string;
-    role: "executive" | "portfolio_manager" | "project_officer";
     name: string;
+    role: "executive" | "portfolio_manager" | "project_officer";
     department: string;
 }, Promise<import("convex/values").GenericId<"users">>>;
 export declare const get: import("convex/server").RegisteredQuery<"public", {
@@ -10,20 +10,20 @@ export declare const get: import("convex/server").RegisteredQuery<"public", {
     _id: import("convex/values").GenericId<"users">;
     _creationTime: number;
     email: string;
-    role: "executive" | "portfolio_manager" | "project_officer";
     name: string;
     createdAt: number;
     updatedAt: number;
+    role: "executive" | "portfolio_manager" | "project_officer";
     department: string;
 }>>;
 export declare const list: import("convex/server").RegisteredQuery<"public", {}, Promise<{
     _id: import("convex/values").GenericId<"users">;
     _creationTime: number;
     email: string;
-    role: "executive" | "portfolio_manager" | "project_officer";
     name: string;
     createdAt: number;
     updatedAt: number;
+    role: "executive" | "portfolio_manager" | "project_officer";
     department: string;
 }[]>>;
 export declare const getByEmail: import("convex/server").RegisteredQuery<"public", {
@@ -32,10 +32,10 @@ export declare const getByEmail: import("convex/server").RegisteredQuery<"public
     _id: import("convex/values").GenericId<"users">;
     _creationTime: number;
     email: string;
-    role: "executive" | "portfolio_manager" | "project_officer";
     name: string;
     createdAt: number;
     updatedAt: number;
+    role: "executive" | "portfolio_manager" | "project_officer";
     department: string;
 }>>;
 export declare const listByRole: import("convex/server").RegisteredQuery<"public", {
@@ -44,16 +44,16 @@ export declare const listByRole: import("convex/server").RegisteredQuery<"public
     _id: import("convex/values").GenericId<"users">;
     _creationTime: number;
     email: string;
-    role: "executive" | "portfolio_manager" | "project_officer";
     name: string;
     createdAt: number;
     updatedAt: number;
+    role: "executive" | "portfolio_manager" | "project_officer";
     department: string;
 }[]>>;
 export declare const update: import("convex/server").RegisteredMutation<"public", {
     email: string;
-    role: "executive" | "portfolio_manager" | "project_officer";
     name: string;
+    role: "executive" | "portfolio_manager" | "project_officer";
     department: string;
     userId: import("convex/values").GenericId<"users">;
 }, Promise<import("convex/values").GenericId<"users">>>;
@@ -76,10 +76,10 @@ export declare const getWithDetails: import("convex/server").RegisteredQuery<"pu
         _id: import("convex/values").GenericId<"users">;
         _creationTime: number;
         email: string;
-        role: "executive" | "portfolio_manager" | "project_officer";
         name: string;
         createdAt: number;
         updatedAt: number;
+        role: "executive" | "portfolio_manager" | "project_officer";
         department: string;
     };
     projects: {
@@ -87,17 +87,17 @@ export declare const getWithDetails: import("convex/server").RegisteredQuery<"pu
         _creationTime: number;
         portfolioId?: import("convex/values").GenericId<"portfolios"> | undefined;
         ownerId?: import("convex/values").GenericId<"users"> | undefined;
-        status: "active" | "planned" | "at-risk" | "delayed" | "completed";
         name: string;
         description: string;
+        status: "planned" | "active" | "at-risk" | "delayed" | "completed";
         budget: number;
         timeline: {
             startDate: number;
             endDate: number;
             milestones: {
                 date: number;
-                status: string;
                 name: string;
+                status: string;
             }[];
         };
         healthScore: number;
@@ -129,3 +129,4 @@ export declare const canAccessPortfolio: import("convex/server").RegisteredQuery
     portfolioId: import("convex/values").GenericId<"portfolios">;
     userId: import("convex/values").GenericId<"users">;
 }, Promise<boolean>>;
+//# sourceMappingURL=users.d.ts.map
