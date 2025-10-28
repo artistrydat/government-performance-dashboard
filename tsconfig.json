@@ -26,5 +26,7 @@
     { "path": "./packages/config" },
     { "path": "./apps/web" },
     { "path": "./apps/api" }
-  ]
+  ],
+  "include": ["packages/**/src/**/*", "apps/**/src/**/*"],
+  "exclude": ["node_modules", "dist", "**/dist/**", "**/*.test.*"]
 }
