@@ -19,12 +19,19 @@ Object.defineProperty(window, 'localStorage', {
 });
 
 // Mock Convex client for tests
-vi.mock('../lib/convex', () => ({
-  default: {
-    query: vi.fn(),
-    mutation: vi.fn(),
-  },
-}));
+// Mock convex/react hooks and provider used in the app so tests don't require a live Convex client
+vi.mock('convex/react', () => {
+  return {
+    // ConvexProvider simply returns children in tests
+    ConvexProvider: ({ children }: any) => children,
+    // useQuery returns null by default (no data)
+    useQuery: () => null,
+    // useMutation returns a stubbed async function
+    useMutation: () => {
+      return async () => ({});
+    },
+  };
+});
 
 // Mock environment variables
-vi.stubEnv('VITE_CONVEX_URL', 'https://mock-convex-url.convex.cloud');
+vi.stubEnv('VITE_CONVEX_URL', 'https://dependable-cat-853.convex.cloud');
