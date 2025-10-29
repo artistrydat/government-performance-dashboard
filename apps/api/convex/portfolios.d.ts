@@ -3,6 +3,13 @@ export declare const create: import("convex/server").RegisteredMutation<"public"
     description: string;
     ownerId: import("convex/values").GenericId<"users">;
     healthScore: number;
+    totalBudget: number;
+    allocatedBudget: number;
+    resourceAllocation: {
+        teamMembers: number;
+        budgetUtilization: number;
+        projectCount: number;
+    };
 }, Promise<import("convex/values").GenericId<"portfolios">>>;
 export declare const get: import("convex/server").RegisteredQuery<"public", {
     portfolioId: import("convex/values").GenericId<"portfolios">;
@@ -15,6 +22,13 @@ export declare const get: import("convex/server").RegisteredQuery<"public", {
     healthScore: number;
     createdAt: number;
     updatedAt: number;
+    totalBudget: number;
+    allocatedBudget: number;
+    resourceAllocation: {
+        teamMembers: number;
+        budgetUtilization: number;
+        projectCount: number;
+    };
 }>>;
 export declare const list: import("convex/server").RegisteredQuery<"public", {}, Promise<{
     _id: import("convex/values").GenericId<"portfolios">;
@@ -25,6 +39,13 @@ export declare const list: import("convex/server").RegisteredQuery<"public", {},
     healthScore: number;
     createdAt: number;
     updatedAt: number;
+    totalBudget: number;
+    allocatedBudget: number;
+    resourceAllocation: {
+        teamMembers: number;
+        budgetUtilization: number;
+        projectCount: number;
+    };
 }[]>>;
 export declare const listByOwner: import("convex/server").RegisteredQuery<"public", {
     ownerId: import("convex/values").GenericId<"users">;
@@ -37,6 +58,13 @@ export declare const listByOwner: import("convex/server").RegisteredQuery<"publi
     healthScore: number;
     createdAt: number;
     updatedAt: number;
+    totalBudget: number;
+    allocatedBudget: number;
+    resourceAllocation: {
+        teamMembers: number;
+        budgetUtilization: number;
+        projectCount: number;
+    };
 }[]>>;
 export declare const update: import("convex/server").RegisteredMutation<"public", {
     name: string;
@@ -44,6 +72,13 @@ export declare const update: import("convex/server").RegisteredMutation<"public"
     portfolioId: import("convex/values").GenericId<"portfolios">;
     ownerId: import("convex/values").GenericId<"users">;
     healthScore: number;
+    totalBudget: number;
+    allocatedBudget: number;
+    resourceAllocation: {
+        teamMembers: number;
+        budgetUtilization: number;
+        projectCount: number;
+    };
 }, Promise<import("convex/values").GenericId<"portfolios">>>;
 export declare const remove: import("convex/server").RegisteredMutation<"public", {
     portfolioId: import("convex/values").GenericId<"portfolios">;
@@ -94,6 +129,13 @@ export declare const getWithProjects: import("convex/server").RegisteredQuery<"p
         healthScore: number;
         createdAt: number;
         updatedAt: number;
+        totalBudget: number;
+        allocatedBudget: number;
+        resourceAllocation: {
+            teamMembers: number;
+            budgetUtilization: number;
+            projectCount: number;
+        };
     };
     projects: {
         _id: import("convex/values").GenericId<"projects">;
@@ -104,6 +146,7 @@ export declare const getWithProjects: import("convex/server").RegisteredQuery<"p
         description: string;
         status: "planned" | "active" | "at-risk" | "delayed" | "completed";
         budget: number;
+        spentBudget: number;
         timeline: {
             startDate: number;
             endDate: number;
@@ -113,6 +156,7 @@ export declare const getWithProjects: import("convex/server").RegisteredQuery<"p
                 status: string;
             }[];
         };
+        teamMembers: import("convex/values").GenericId<"users">[];
         healthScore: number;
         riskLevel: "low" | "medium" | "high" | "critical";
         tags: string[];

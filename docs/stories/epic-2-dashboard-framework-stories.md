@@ -243,8 +243,8 @@
 - [x] Portfolio creation and editing functionality
 - [ ] Project assignment to portfolios
 - [x] Portfolio health calculation logic
-- [ ] Resource allocation overview
-- [ ] Budget tracking across portfolios
+- [x] Resource allocation overview
+- [x] Budget tracking across portfolios
 - [x] Unit tests for portfolio management
 
 **Technical Details:**
@@ -351,8 +351,8 @@
 - [x] Project creation and editing functionality
 - [x] Detailed project view with all attributes
 - [x] Timeline and milestone tracking
-- [ ] Budget and spending tracking
-- [ ] Team member assignment
+- [x] Budget and spending tracking
+- [x] Team member assignment
 - [x] Unit tests for project management
 
 **Technical Details:**

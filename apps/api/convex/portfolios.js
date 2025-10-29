@@ -6,6 +6,13 @@ const portfolioValidation = {
     description: v.string(),
     ownerId: v.id('users'),
     healthScore: v.number(),
+    totalBudget: v.number(),
+    allocatedBudget: v.number(),
+    resourceAllocation: v.object({
+        teamMembers: v.number(),
+        budgetUtilization: v.number(),
+        projectCount: v.number(),
+    }),
 };
 // Calculate portfolio health score based on its projects
 const calculatePortfolioHealthScore = (projects) => {

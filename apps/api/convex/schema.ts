@@ -13,6 +13,7 @@ export default defineSchema({
       v.literal('completed')
     ),
     budget: v.number(),
+    spentBudget: v.number(),
     timeline: v.object({
       startDate: v.number(),
       endDate: v.number(),
@@ -26,6 +27,7 @@ export default defineSchema({
     }),
     portfolioId: v.optional(v.id('portfolios')),
     ownerId: v.optional(v.id('users')),
+    teamMembers: v.array(v.id('users')),
     healthScore: v.number(),
     riskLevel: v.union(
       v.literal('low'),
@@ -49,6 +51,13 @@ export default defineSchema({
     description: v.string(),
     ownerId: v.id('users'),
     healthScore: v.number(),
+    totalBudget: v.number(),
+    allocatedBudget: v.number(),
+    resourceAllocation: v.object({
+      teamMembers: v.number(),
+      budgetUtilization: v.number(),
+      projectCount: v.number(),
+    }),
     createdAt: v.number(),
     updatedAt: v.number(),
   })

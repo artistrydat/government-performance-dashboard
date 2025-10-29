@@ -6,6 +6,7 @@ export function useProjects() {
   const projects = useQuery(api.projects.list);
   const createProject = useMutation(api.projects.create);
   const updateProject = useMutation(api.projects.update);
+  const updatePortfolioAssignment = useMutation(api.projects.updatePortfolioAssignment);
   const deleteProject = useMutation(api.projects.remove);
 
   return {
@@ -13,6 +14,7 @@ export function useProjects() {
     isLoading: projects === undefined,
     createProject,
     updateProject,
+    updatePortfolioAssignment,
     deleteProject,
   };
 }

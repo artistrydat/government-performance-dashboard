@@ -33,6 +33,7 @@ const mockProjects = [
     description: 'Test project description 1',
     status: 'active' as const,
     budget: 100000,
+    spentBudget: 0,
     timeline: {
       startDate: Date.now(),
       endDate: Date.now() + 30 * 24 * 60 * 60 * 1000,
@@ -42,6 +43,7 @@ const mockProjects = [
     },
     portfolioId: 'portfolio1' as any,
     ownerId: 'user1' as any,
+    teamMembers: [],
     healthScore: 85,
     riskLevel: 'medium' as const,
     tags: ['frontend', 'react'],
@@ -55,6 +57,7 @@ const mockProjects = [
     description: 'Test project description 2',
     status: 'planned' as const,
     budget: 50000,
+    spentBudget: 0,
     timeline: {
       startDate: Date.now(),
       endDate: Date.now() + 60 * 24 * 60 * 60 * 1000,
@@ -62,6 +65,7 @@ const mockProjects = [
     },
     portfolioId: undefined,
     ownerId: undefined,
+    teamMembers: [],
     healthScore: 95,
     riskLevel: 'low' as const,
     tags: ['backend', 'api'],
@@ -78,6 +82,13 @@ const mockPortfolios = [
     description: 'Test portfolio description',
     ownerId: 'user1' as any,
     healthScore: 80,
+    totalBudget: 100000,
+    allocatedBudget: 50000,
+    resourceAllocation: {
+      teamMembers: 0,
+      budgetUtilization: 0,
+      projectCount: 0,
+    },
     createdAt: Date.now(),
     updatedAt: Date.now(),
   },
@@ -105,6 +116,7 @@ describe('ProjectList', () => {
       isLoading: false,
       createProject: createMockMutation('new-project-id'),
       updateProject: createMockMutation('updated-project-id'),
+      updatePortfolioAssignment: createMockMutation('updated-portfolio-assignment-id'),
       deleteProject: createMockMutation('deleted-project-id'),
     });
 
@@ -148,8 +160,13 @@ describe('ProjectList', () => {
     expect(screen.getByText('Test Project 1')).toBeInTheDocument();
     expect(screen.getByText('Test Project 2')).toBeInTheDocument();
     expect(screen.getByText('Test project description 1')).toBeInTheDocument();
-    expect(screen.getByText('$100,000')).toBeInTheDocument();
-    expect(screen.getByText('$50,000')).toBeInTheDocument();
+
+    // Use getAllByText for budget amounts since there are multiple elements with the same text
+    const budgetElements = screen.getAllByText('$100,000');
+    expect(budgetElements.length).toBeGreaterThan(0);
+
+    const budgetElements2 = screen.getAllByText('$50,000');
+    expect(budgetElements2.length).toBeGreaterThan(0);
   });
 
   it('displays loading state when projects are loading', () => {
@@ -158,6 +175,7 @@ describe('ProjectList', () => {
       isLoading: true,
       createProject: createMockMutation('new-project-id'),
       updateProject: createMockMutation('updated-project-id'),
+      updatePortfolioAssignment: createMockMutation('updated-portfolio-assignment-id'),
       deleteProject: createMockMutation('deleted-project-id'),
     });
 
@@ -173,6 +191,7 @@ describe('ProjectList', () => {
       isLoading: false,
       createProject: createMockMutation('new-project-id'),
       updateProject: createMockMutation('updated-project-id'),
+      updatePortfolioAssignment: createMockMutation('updated-portfolio-assignment-id'),
       deleteProject: createMockMutation('deleted-project-id'),
     });
 
@@ -203,6 +222,7 @@ describe('ProjectList', () => {
       isLoading: false,
       createProject: mockCreateProject,
       updateProject: createMockMutation('updated-project-id'),
+      updatePortfolioAssignment: createMockMutation('updated-portfolio-assignment-id'),
       deleteProject: createMockMutation('deleted-project-id'),
     });
 
@@ -219,7 +239,7 @@ describe('ProjectList', () => {
     fireEvent.change(screen.getByLabelText(/description/i), {
       target: { value: 'New project description' },
     });
-    fireEvent.change(screen.getByLabelText(/budget/i), {
+    fireEvent.change(screen.getByLabelText('Budget ($)'), {
       target: { value: '75000' },
     });
     fireEvent.change(screen.getByLabelText(/health score/i), {
@@ -235,6 +255,7 @@ describe('ProjectList', () => {
         description: 'New project description',
         status: 'planned',
         budget: 75000,
+        spentBudget: 0,
         timeline: {
           startDate: expect.any(Number),
           endDate: expect.any(Number),
@@ -242,6 +263,7 @@ describe('ProjectList', () => {
         },
         portfolioId: undefined,
         ownerId: undefined,
+        teamMembers: [],
         healthScore: 90,
         riskLevel: 'low',
         tags: [],
@@ -288,6 +310,7 @@ describe('ProjectList', () => {
       isLoading: false,
       createProject: createMockMutation('new-project-id'),
       updateProject: createMockMutation('updated-project-id'),
+      updatePortfolioAssignment: createMockMutation('updated-portfolio-assignment-id'),
       deleteProject: mockDeleteProject,
     });
 

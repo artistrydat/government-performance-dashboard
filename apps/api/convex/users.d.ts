@@ -91,6 +91,7 @@ export declare const getWithDetails: import("convex/server").RegisteredQuery<"pu
         description: string;
         status: "planned" | "active" | "at-risk" | "delayed" | "completed";
         budget: number;
+        spentBudget: number;
         timeline: {
             startDate: number;
             endDate: number;
@@ -100,6 +101,7 @@ export declare const getWithDetails: import("convex/server").RegisteredQuery<"pu
                 status: string;
             }[];
         };
+        teamMembers: import("convex/values").GenericId<"users">[];
         healthScore: number;
         riskLevel: "low" | "medium" | "high" | "critical";
         tags: string[];
@@ -115,6 +117,13 @@ export declare const getWithDetails: import("convex/server").RegisteredQuery<"pu
         healthScore: number;
         createdAt: number;
         updatedAt: number;
+        totalBudget: number;
+        allocatedBudget: number;
+        resourceAllocation: {
+            teamMembers: number;
+            budgetUtilization: number;
+            projectCount: number;
+        };
     }[];
 }>>;
 export declare const hasPermission: import("convex/server").RegisteredQuery<"public", {

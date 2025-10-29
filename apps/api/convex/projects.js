@@ -6,6 +6,7 @@ const projectValidation = {
     description: v.string(),
     status: v.union(v.literal('planned'), v.literal('active'), v.literal('at-risk'), v.literal('delayed'), v.literal('completed')),
     budget: v.number(),
+    spentBudget: v.number(),
     timeline: v.object({
         startDate: v.number(),
         endDate: v.number(),
@@ -17,6 +18,7 @@ const projectValidation = {
     }),
     portfolioId: v.optional(v.id('portfolios')),
     ownerId: v.optional(v.id('users')),
+    teamMembers: v.array(v.id('users')),
     healthScore: v.number(),
     riskLevel: v.union(v.literal('low'), v.literal('medium'), v.literal('high'), v.literal('critical')),
     tags: v.array(v.string()),
@@ -112,6 +114,21 @@ export const update = mutation({
         }
         await ctx.db.patch(projectId, {
             ...updateData,
+            updatedAt: Date.now(),
+        });
+        return projectId;
+    },
+});
+// Update project portfolio assignment
+export const updatePortfolioAssignment = mutation({
+    args: {
+        projectId: v.id('projects'),
+        portfolioId: v.optional(v.id('portfolios')),
+    },
+    handler: async (ctx, args) => {
+        const { projectId, portfolioId } = args;
+        await ctx.db.patch(projectId, {
+            portfolioId,
             updatedAt: Date.now(),
         });
         return projectId;

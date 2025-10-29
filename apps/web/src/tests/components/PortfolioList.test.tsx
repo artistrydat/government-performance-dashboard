@@ -38,6 +38,13 @@ describe('PortfolioList', () => {
       description: 'Test description 1',
       ownerId: 'user-123' as any,
       healthScore: 85,
+      totalBudget: 100000,
+      allocatedBudget: 50000,
+      resourceAllocation: {
+        teamMembers: 0,
+        budgetUtilization: 0,
+        projectCount: 0,
+      },
       createdAt: Date.now(),
       updatedAt: Date.now(),
     },
@@ -48,6 +55,13 @@ describe('PortfolioList', () => {
       description: 'Test description 2',
       ownerId: 'user-123' as any,
       healthScore: 45,
+      totalBudget: 50000,
+      allocatedBudget: 25000,
+      resourceAllocation: {
+        teamMembers: 0,
+        budgetUtilization: 0,
+        projectCount: 0,
+      },
       createdAt: Date.now(),
       updatedAt: Date.now(),
     },
@@ -153,7 +167,14 @@ describe('PortfolioList', () => {
         name: 'New Portfolio',
         description: 'New portfolio description',
         healthScore: 90,
+        totalBudget: 0,
+        allocatedBudget: 0,
         ownerId: 'user-123',
+        resourceAllocation: {
+          teamMembers: 0,
+          budgetUtilization: 0,
+          projectCount: 0,
+        },
       });
     });
   });
@@ -210,6 +231,13 @@ describe('PortfolioList', () => {
         description: 'Updated description',
         healthScore: 85,
         ownerId: 'user-123',
+        totalBudget: 100000,
+        allocatedBudget: 50000,
+        resourceAllocation: {
+          teamMembers: 0,
+          budgetUtilization: 0,
+          projectCount: 0,
+        },
       });
     });
   });

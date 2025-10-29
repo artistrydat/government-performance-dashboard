@@ -6,6 +6,7 @@ declare const _default: import("convex/server").SchemaDefinition<{
         description: string;
         status: "planned" | "active" | "at-risk" | "delayed" | "completed";
         budget: number;
+        spentBudget: number;
         timeline: {
             startDate: number;
             endDate: number;
@@ -15,6 +16,7 @@ declare const _default: import("convex/server").SchemaDefinition<{
                 status: string;
             }[];
         };
+        teamMembers: import("convex/values").GenericId<"users">[];
         healthScore: number;
         riskLevel: "low" | "medium" | "high" | "critical";
         tags: string[];
@@ -25,6 +27,7 @@ declare const _default: import("convex/server").SchemaDefinition<{
         description: import("convex/values").VString<string, "required">;
         status: import("convex/values").VUnion<"planned" | "active" | "at-risk" | "delayed" | "completed", [import("convex/values").VLiteral<"planned", "required">, import("convex/values").VLiteral<"active", "required">, import("convex/values").VLiteral<"at-risk", "required">, import("convex/values").VLiteral<"delayed", "required">, import("convex/values").VLiteral<"completed", "required">], "required", never>;
         budget: import("convex/values").VFloat64<number, "required">;
+        spentBudget: import("convex/values").VFloat64<number, "required">;
         timeline: import("convex/values").VObject<{
             startDate: number;
             endDate: number;
@@ -52,12 +55,13 @@ declare const _default: import("convex/server").SchemaDefinition<{
         }, "required", "startDate" | "endDate" | "milestones">;
         portfolioId: import("convex/values").VId<import("convex/values").GenericId<"portfolios"> | undefined, "optional">;
         ownerId: import("convex/values").VId<import("convex/values").GenericId<"users"> | undefined, "optional">;
+        teamMembers: import("convex/values").VArray<import("convex/values").GenericId<"users">[], import("convex/values").VId<import("convex/values").GenericId<"users">, "required">, "required">;
         healthScore: import("convex/values").VFloat64<number, "required">;
         riskLevel: import("convex/values").VUnion<"low" | "medium" | "high" | "critical", [import("convex/values").VLiteral<"low", "required">, import("convex/values").VLiteral<"medium", "required">, import("convex/values").VLiteral<"high", "required">, import("convex/values").VLiteral<"critical", "required">], "required", never>;
         tags: import("convex/values").VArray<string[], import("convex/values").VString<string, "required">, "required">;
         createdAt: import("convex/values").VFloat64<number, "required">;
         updatedAt: import("convex/values").VFloat64<number, "required">;
-    }, "required", "name" | "description" | "status" | "budget" | "timeline" | "portfolioId" | "ownerId" | "healthScore" | "riskLevel" | "tags" | "createdAt" | "updatedAt" | "timeline.startDate" | "timeline.endDate" | "timeline.milestones">, {
+    }, "required", "name" | "description" | "status" | "budget" | "spentBudget" | "timeline" | "portfolioId" | "ownerId" | "teamMembers" | "healthScore" | "riskLevel" | "tags" | "createdAt" | "updatedAt" | "timeline.startDate" | "timeline.endDate" | "timeline.milestones">, {
         by_status: ["status", "_creationTime"];
         by_portfolio: ["portfolioId", "_creationTime"];
         by_owner: ["ownerId", "_creationTime"];
@@ -72,14 +76,32 @@ declare const _default: import("convex/server").SchemaDefinition<{
         healthScore: number;
         createdAt: number;
         updatedAt: number;
+        totalBudget: number;
+        allocatedBudget: number;
+        resourceAllocation: {
+            teamMembers: number;
+            budgetUtilization: number;
+            projectCount: number;
+        };
     }, {
         name: import("convex/values").VString<string, "required">;
         description: import("convex/values").VString<string, "required">;
         ownerId: import("convex/values").VId<import("convex/values").GenericId<"users">, "required">;
         healthScore: import("convex/values").VFloat64<number, "required">;
+        totalBudget: import("convex/values").VFloat64<number, "required">;
+        allocatedBudget: import("convex/values").VFloat64<number, "required">;
+        resourceAllocation: import("convex/values").VObject<{
+            teamMembers: number;
+            budgetUtilization: number;
+            projectCount: number;
+        }, {
+            teamMembers: import("convex/values").VFloat64<number, "required">;
+            budgetUtilization: import("convex/values").VFloat64<number, "required">;
+            projectCount: import("convex/values").VFloat64<number, "required">;
+        }, "required", "teamMembers" | "budgetUtilization" | "projectCount">;
         createdAt: import("convex/values").VFloat64<number, "required">;
         updatedAt: import("convex/values").VFloat64<number, "required">;
-    }, "required", "name" | "description" | "ownerId" | "healthScore" | "createdAt" | "updatedAt">, {
+    }, "required", "name" | "description" | "ownerId" | "healthScore" | "createdAt" | "updatedAt" | "totalBudget" | "allocatedBudget" | "resourceAllocation" | "resourceAllocation.teamMembers" | "resourceAllocation.budgetUtilization" | "resourceAllocation.projectCount">, {
         by_owner: ["ownerId", "_creationTime"];
         by_health_score: ["healthScore", "_creationTime"];
     }, {}, {}>;

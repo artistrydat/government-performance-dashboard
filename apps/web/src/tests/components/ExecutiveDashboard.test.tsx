@@ -154,9 +154,10 @@ describe('ExecutiveDashboard', () => {
     mockUseProjects.mockReturnValue({
       projects: [],
       isLoading: true,
-      createProject: mockCreateProject,
-      updateProject: mockUpdateProject,
-      deleteProject: mockDeleteProject,
+      createProject: createMockMutation('new-project-id'),
+      updateProject: createMockMutation('updated-project-id'),
+      updatePortfolioAssignment: createMockMutation('updated-portfolio-assignment-id'),
+      deleteProject: createMockMutation('deleted-project-id'),
     });
 
     mockUseRisks.mockReturnValue({

@@ -7,6 +7,8 @@ interface PortfolioFormData {
   name: string;
   description: string;
   healthScore: number;
+  totalBudget: number;
+  allocatedBudget: number;
 }
 
 const PortfolioList: React.FC = () => {
@@ -19,6 +21,8 @@ const PortfolioList: React.FC = () => {
     name: '',
     description: '',
     healthScore: 75, // Default health score
+    totalBudget: 0,
+    allocatedBudget: 0,
   });
 
   const handleCreatePortfolio = async (e: React.FormEvent) => {
@@ -27,8 +31,19 @@ const PortfolioList: React.FC = () => {
       await createPortfolio({
         ...formData,
         ownerId: user?.id as Id<'users'>,
+        resourceAllocation: {
+          teamMembers: 0,
+          budgetUtilization: 0,
+          projectCount: 0,
+        },
       });
-      setFormData({ name: '', description: '', healthScore: 75 });
+      setFormData({
+        name: '',
+        description: '',
+        healthScore: 75,
+        totalBudget: 0,
+        allocatedBudget: 0,
+      });
       setShowCreateForm(false);
     } catch (error) {
       alert('Failed to create portfolio. Please try again.');
@@ -41,9 +56,20 @@ const PortfolioList: React.FC = () => {
         portfolioId,
         ...formData,
         ownerId: user?.id as Id<'users'>,
+        resourceAllocation: {
+          teamMembers: 0,
+          budgetUtilization: 0,
+          projectCount: 0,
+        },
       });
       setEditingPortfolio(null);
-      setFormData({ name: '', description: '', healthScore: 75 });
+      setFormData({
+        name: '',
+        description: '',
+        healthScore: 75,
+        totalBudget: 0,
+        allocatedBudget: 0,
+      });
     } catch (error) {
       alert('Failed to update portfolio. Please try again.');
     }
@@ -141,6 +167,38 @@ const PortfolioList: React.FC = () => {
                     required
                   />
                 </div>
+                <div className="form-control">
+                  <label htmlFor="total-budget" className="label">
+                    <span className="label-text">Total Budget ($)</span>
+                  </label>
+                  <input
+                    id="total-budget"
+                    type="number"
+                    min="0"
+                    className="input input-bordered"
+                    value={formData.totalBudget}
+                    onChange={e =>
+                      setFormData({ ...formData, totalBudget: parseInt(e.target.value) || 0 })
+                    }
+                    required
+                  />
+                </div>
+                <div className="form-control">
+                  <label htmlFor="allocated-budget" className="label">
+                    <span className="label-text">Allocated Budget ($)</span>
+                  </label>
+                  <input
+                    id="allocated-budget"
+                    type="number"
+                    min="0"
+                    className="input input-bordered"
+                    value={formData.allocatedBudget}
+                    onChange={e =>
+                      setFormData({ ...formData, allocatedBudget: parseInt(e.target.value) || 0 })
+                    }
+                    required
+                  />
+                </div>
                 <div className="form-control md:col-span-2">
                   <label htmlFor="portfolio-description" className="label">
                     <span className="label-text">Description</span>
@@ -183,12 +241,34 @@ const PortfolioList: React.FC = () => {
                     className="input input-bordered input-sm w-full"
                     value={formData.name}
                     onChange={e => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="Portfolio Name"
                   />
                   <textarea
                     className="textarea textarea-bordered textarea-sm w-full h-20"
                     value={formData.description}
                     onChange={e => setFormData({ ...formData, description: e.target.value })}
+                    placeholder="Description"
                   />
+                  <div className="grid grid-cols-2 gap-2">
+                    <input
+                      type="number"
+                      className="input input-bordered input-sm"
+                      value={formData.totalBudget}
+                      onChange={e =>
+                        setFormData({ ...formData, totalBudget: parseInt(e.target.value) || 0 })
+                      }
+                      placeholder="Total Budget"
+                    />
+                    <input
+                      type="number"
+                      className="input input-bordered input-sm"
+                      value={formData.allocatedBudget}
+                      onChange={e =>
+                        setFormData({ ...formData, allocatedBudget: parseInt(e.target.value) || 0 })
+                      }
+                      placeholder="Allocated Budget"
+                    />
+                  </div>
                   <div className="flex gap-2">
                     <button
                       className="btn btn-success btn-sm"
@@ -200,7 +280,13 @@ const PortfolioList: React.FC = () => {
                       className="btn btn-ghost btn-sm"
                       onClick={() => {
                         setEditingPortfolio(null);
-                        setFormData({ name: '', description: '', healthScore: 75 });
+                        setFormData({
+                          name: '',
+                          description: '',
+                          healthScore: 75,
+                          totalBudget: 0,
+                          allocatedBudget: 0,
+                        });
                       }}
                     >
                       Cancel
@@ -216,7 +302,30 @@ const PortfolioList: React.FC = () => {
                     </div>
                   </div>
                   <p className="text-sm text-base-content/70">{portfolio.description}</p>
-                  <div className="mt-4">
+                  <div className="mt-4 space-y-2">
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="font-medium">Budget:</span>
+                      <span>${portfolio.totalBudget?.toLocaleString() || 0}</span>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="font-medium">Allocated:</span>
+                      <span>${portfolio.allocatedBudget?.toLocaleString() || 0}</span>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="font-medium">Available:</span>
+                      <span
+                        className={
+                          portfolio.totalBudget - portfolio.allocatedBudget < 0
+                            ? 'text-error'
+                            : 'text-success'
+                        }
+                      >
+                        $
+                        {(
+                          (portfolio.totalBudget || 0) - (portfolio.allocatedBudget || 0)
+                        ).toLocaleString()}
+                      </span>
+                    </div>
                     <div className="flex justify-between items-center text-sm">
                       <span className={getHealthScoreColor(portfolio.healthScore)}>
                         {getHealthScoreText(portfolio.healthScore)}
@@ -235,6 +344,8 @@ const PortfolioList: React.FC = () => {
                           name: portfolio.name,
                           description: portfolio.description,
                           healthScore: portfolio.healthScore,
+                          totalBudget: portfolio.totalBudget || 0,
+                          allocatedBudget: portfolio.allocatedBudget || 0,
                         });
                       }}
                     >

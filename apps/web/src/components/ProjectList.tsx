@@ -9,6 +9,7 @@ interface ProjectFormData {
   description: string;
   status: 'planned' | 'active' | 'at-risk' | 'delayed' | 'completed';
   budget: number;
+  spentBudget: number;
   timeline: {
     startDate: number;
     endDate: number;
@@ -20,6 +21,7 @@ interface ProjectFormData {
   };
   portfolioId?: Id<'portfolios'>;
   ownerId?: Id<'users'>;
+  teamMembers: Id<'users'>[];
   healthScore: number;
   riskLevel: 'low' | 'medium' | 'high' | 'critical';
   tags: string[];
@@ -37,6 +39,7 @@ const ProjectList: React.FC = () => {
     description: '',
     status: 'planned',
     budget: 0,
+    spentBudget: 0,
     timeline: {
       startDate: Date.now(),
       endDate: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 days from now
@@ -44,6 +47,7 @@ const ProjectList: React.FC = () => {
     },
     portfolioId: undefined,
     ownerId: undefined,
+    teamMembers: [],
     healthScore: 100,
     riskLevel: 'low',
     tags: [],
@@ -63,6 +67,7 @@ const ProjectList: React.FC = () => {
         description: '',
         status: 'planned',
         budget: 0,
+        spentBudget: 0,
         timeline: {
           startDate: Date.now(),
           endDate: Date.now() + 30 * 24 * 60 * 60 * 1000,
@@ -70,6 +75,7 @@ const ProjectList: React.FC = () => {
         },
         portfolioId: undefined,
         ownerId: undefined,
+        teamMembers: [],
         healthScore: 100,
         riskLevel: 'low',
         tags: [],
@@ -109,9 +115,11 @@ const ProjectList: React.FC = () => {
         description: project.description,
         status: project.status,
         budget: project.budget,
+        spentBudget: project.spentBudget || 0,
         timeline: project.timeline,
         portfolioId: project.portfolioId,
         ownerId: project.ownerId,
+        teamMembers: project.teamMembers || [],
         healthScore: project.healthScore,
         riskLevel: project.riskLevel,
         tags: project.tags,
@@ -256,6 +264,22 @@ const ProjectList: React.FC = () => {
                   <span className="font-semibold">${project.budget.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-sm">
+                  <span>Spent:</span>
+                  <span
+                    className={`font-semibold ${project.spentBudget > project.budget ? 'text-error' : 'text-success'}`}
+                  >
+                    ${(project.spentBudget || 0).toLocaleString()}
+                  </span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>Remaining:</span>
+                  <span
+                    className={`font-semibold ${project.budget - (project.spentBudget || 0) < 0 ? 'text-error' : 'text-success'}`}
+                  >
+                    ${(project.budget - (project.spentBudget || 0)).toLocaleString()}
+                  </span>
+                </div>
+                <div className="flex justify-between text-sm">
                   <span>Timeline:</span>
                   <span className="font-semibold">
                     {new Date(project.timeline.startDate).toLocaleDateString()} -{' '}
@@ -381,6 +405,24 @@ const ProjectList: React.FC = () => {
                     value={formData.budget}
                     onChange={e =>
                       setFormData(prev => ({ ...prev, budget: Number(e.target.value) }))
+                    }
+                    min="0"
+                    step="1000"
+                    required
+                  />
+                </div>
+
+                <div className="form-control">
+                  <label htmlFor="project-spent-budget" className="label">
+                    <span className="label-text">Spent Budget ($)</span>
+                  </label>
+                  <input
+                    id="project-spent-budget"
+                    type="number"
+                    className="input input-bordered"
+                    value={formData.spentBudget}
+                    onChange={e =>
+                      setFormData(prev => ({ ...prev, spentBudget: Number(e.target.value) }))
                     }
                     min="0"
                     step="1000"
@@ -680,6 +722,24 @@ const ProjectList: React.FC = () => {
                     value={formData.budget}
                     onChange={e =>
                       setFormData(prev => ({ ...prev, budget: Number(e.target.value) }))
+                    }
+                    min="0"
+                    step="1000"
+                    required
+                  />
+                </div>
+
+                <div className="form-control">
+                  <label htmlFor="project-spent-budget" className="label">
+                    <span className="label-text">Spent Budget ($)</span>
+                  </label>
+                  <input
+                    id="project-spent-budget"
+                    type="number"
+                    className="input input-bordered"
+                    value={formData.spentBudget}
+                    onChange={e =>
+                      setFormData(prev => ({ ...prev, spentBudget: Number(e.target.value) }))
                     }
                     min="0"
                     step="1000"
