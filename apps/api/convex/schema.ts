@@ -183,4 +183,42 @@ export default defineSchema({
     .index('by_project', ['projectId'])
     .index('by_standard', ['standardId'])
     .index('by_evaluated_at', ['evaluatedAt']),
+
+  // Automated compliance checking tables for Story 3.2.1
+  complianceSchedules: defineTable({
+    frequency: v.union(v.literal('daily'), v.literal('weekly'), v.literal('monthly')),
+    portfolioIds: v.array(v.id('portfolios')),
+    standardIds: v.array(v.id('pmiStandards')),
+    nextEvaluationTime: v.number(),
+    isActive: v.boolean(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_next_evaluation', ['nextEvaluationTime'])
+    .index('by_active', ['isActive']),
+
+  complianceNotifications: defineTable({
+    recipientId: v.id('users'),
+    projectId: v.id('projects'),
+    standardId: v.id('pmiStandards'),
+    alertType: v.union(
+      v.literal('non_compliant'),
+      v.literal('declining_trend'),
+      v.literal('missing_evidence'),
+      v.literal('overdue_evaluation')
+    ),
+    severity: v.union(
+      v.literal('low'),
+      v.literal('medium'),
+      v.literal('high'),
+      v.literal('critical')
+    ),
+    message: v.string(),
+    isRead: v.boolean(),
+    createdAt: v.number(),
+  })
+    .index('by_recipient', ['recipientId'])
+    .index('by_project', ['projectId'])
+    .index('by_created_at', ['createdAt'])
+    .index('by_read_status', ['isRead']),
 });
