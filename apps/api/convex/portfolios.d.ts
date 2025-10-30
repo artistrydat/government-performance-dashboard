@@ -151,9 +151,9 @@ export declare const getWithProjects: import("convex/server").RegisteredQuery<"p
             startDate: number;
             endDate: number;
             milestones: {
-                date: number;
                 name: string;
                 status: string;
+                date: number;
             }[];
         };
         teamMembers: import("convex/values").GenericId<"users">[];

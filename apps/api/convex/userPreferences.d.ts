@@ -43,8 +43,8 @@ export declare const updateUserPreferences: import("convex/server").RegisteredMu
         theme: "light" | "dark" | "auto";
         dashboardLayout: {
             widgets: {
-                type: string;
                 id: string;
+                type: string;
                 position: {
                     x: number;
                     y: number;
@@ -63,13 +63,13 @@ export declare const updateUserPreferences: import("convex/server").RegisteredMu
             project_officer: string;
         };
         notifications: {
-            push: boolean;
             email: boolean;
+            push: boolean;
             riskAlerts: boolean;
             projectUpdates: boolean;
         };
         accessibility: {
-            fontSize: "small" | "medium" | "large";
+            fontSize: "medium" | "small" | "large";
             highContrast: boolean;
             reducedMotion: boolean;
         };
@@ -78,8 +78,8 @@ export declare const updateUserPreferences: import("convex/server").RegisteredMu
     theme: "light" | "dark" | "auto";
     dashboardLayout: {
         widgets: {
-            type: string;
             id: string;
+            type: string;
             position: {
                 x: number;
                 y: number;
@@ -98,13 +98,13 @@ export declare const updateUserPreferences: import("convex/server").RegisteredMu
         project_officer: string;
     };
     notifications: {
-        push: boolean;
         email: boolean;
+        push: boolean;
         riskAlerts: boolean;
         projectUpdates: boolean;
     };
     accessibility: {
-        fontSize: "small" | "medium" | "large";
+        fontSize: "medium" | "small" | "large";
         highContrast: boolean;
         reducedMotion: boolean;
     };

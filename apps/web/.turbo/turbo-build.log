@@ -7,7 +7,7 @@ transforming...
 
 🌼   daisyUI 4.12.24
 ├─ ✔︎ 2 themes added		https://daisyui.com/docs/themes
-╰─ ❤︎ Support daisyUI project:	https://opencollective.com/daisyui
+╰─ ★ Star daisyUI on GitHub	https://github.com/saadeghi/daisyui
 
 ✓ 131 modules transformed.
 rendering chunks...
@@ -15,4 +15,4 @@ computing gzip size...
 dist/index.html                   0.49 kB │ gzip:  0.32 kB
 dist/assets/index-D2qSbbY8.css  110.80 kB │ gzip: 16.66 kB
 dist/assets/index-D5gWQmaA.js   334.83 kB │ gzip: 91.54 kB │ map: 1,239.01 kB
-✓ built in 6.91s
+✓ built in 5.72s

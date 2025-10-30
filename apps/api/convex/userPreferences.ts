@@ -196,17 +196,27 @@ export const defaultPreferences: Record<string, UserPreferences> = {
 export const getUserPreferences = query({
   args: { userId: v.string() },
   handler: async (ctx, args) => {
-    const user = await ctx.db
+    // Try to get user by ID first from users table
+    let user = await ctx.db
       .query('users')
-      .withIndex('by_email', q => q.eq('email', args.userId))
+      .filter(q => q.eq(q.field('_id'), args.userId))
       .first();
 
+    // If not found by ID, try by email
     if (!user) {
-      throw new Error('User not found');
+      user = await ctx.db
+        .query('users')
+        .withIndex('by_email', q => q.eq('email', args.userId))
+        .first();
     }
 
-    // For now, return default preferences based on role
-    // In a real implementation, we'd store preferences in the database
+    if (!user) {
+      // Return default executive preferences if user not found
+      // This prevents the app from crashing for unauthenticated users
+      return defaultPreferences.executive;
+    }
+
+    // Return default preferences based on role
     return defaultPreferences[user.role] || defaultPreferences.executive;
   },
 });
