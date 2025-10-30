@@ -411,12 +411,251 @@ export const seedAll = mutation({
       }
     }
 
+    // Seed PMI Standards for Epic 3
+    const pmiStandards = [
+      {
+        name: 'Project Charter Development',
+        description: 'Formal authorization of the project and the project manager',
+        category: 'project' as const,
+        level: 'foundational' as const,
+        weight: 0.15,
+        version: '1.0',
+        isActive: true,
+      },
+      {
+        name: 'Stakeholder Engagement',
+        description: 'Identification and engagement of project stakeholders',
+        category: 'project' as const,
+        level: 'foundational' as const,
+        weight: 0.12,
+        version: '1.0',
+        isActive: true,
+      },
+      {
+        name: 'Scope Management',
+        description: 'Defining and controlling what is and is not included in the project',
+        category: 'project' as const,
+        level: 'intermediate' as const,
+        weight: 0.18,
+        version: '1.0',
+        isActive: true,
+      },
+      {
+        name: 'Risk Management Planning',
+        description:
+          'Systematic approach to identifying, analyzing, and responding to project risks',
+        category: 'project' as const,
+        level: 'intermediate' as const,
+        weight: 0.2,
+        version: '1.0',
+        isActive: true,
+      },
+      {
+        name: 'Portfolio Governance',
+        description: 'Strategic alignment and oversight of project portfolios',
+        category: 'portfolio' as const,
+        level: 'advanced' as const,
+        weight: 0.25,
+        version: '1.0',
+        isActive: true,
+      },
+      {
+        name: 'Program Management Framework',
+        description: 'Coordination and management of related projects',
+        category: 'program' as const,
+        level: 'advanced' as const,
+        weight: 0.1,
+        version: '1.0',
+        isActive: true,
+      },
+    ];
+
+    const seededStandards = [];
+
+    for (const standardData of pmiStandards) {
+      const standardId = await ctx.db.insert('pmiStandards', {
+        ...standardData,
+        createdAt: now,
+        updatedAt: now,
+      });
+
+      const standard = await ctx.db.get(standardId);
+      if (standard) {
+        seededStandards.push(standard);
+      }
+    }
+
+    // Seed PMI Standard Criteria
+    const pmiCriteria = [
+      // Project Charter Criteria
+      {
+        standardId: seededStandards[0]._id,
+        name: 'Business Case Documentation',
+        description: 'Documented business justification for the project',
+        requirement: 'Project must have a documented business case with ROI analysis',
+        evidenceType: 'document' as const,
+        evidenceDescription: 'Business case document with executive approval',
+        scoringMethod: 'binary' as const,
+        maxScore: 10,
+        isMandatory: true,
+        order: 1,
+      },
+      {
+        standardId: seededStandards[0]._id,
+        name: 'Stakeholder Analysis',
+        description: 'Initial stakeholder identification and analysis',
+        requirement: 'Stakeholder register with power/interest analysis',
+        evidenceType: 'document' as const,
+        evidenceDescription: 'Stakeholder register document',
+        scoringMethod: 'partial' as const,
+        maxScore: 8,
+        isMandatory: true,
+        order: 2,
+      },
+
+      // Stakeholder Engagement Criteria
+      {
+        standardId: seededStandards[1]._id,
+        name: 'Communication Plan',
+        description: 'Structured approach to stakeholder communication',
+        requirement: 'Documented communication management plan',
+        evidenceType: 'document' as const,
+        evidenceDescription: 'Communication plan document',
+        scoringMethod: 'binary' as const,
+        maxScore: 10,
+        isMandatory: true,
+        order: 1,
+      },
+      {
+        standardId: seededStandards[1]._id,
+        name: 'Engagement Metrics',
+        description: 'Measurement of stakeholder engagement effectiveness',
+        requirement: 'Regular stakeholder satisfaction surveys',
+        evidenceType: 'text' as const,
+        evidenceDescription: 'Survey results and analysis reports',
+        scoringMethod: 'scale' as const,
+        maxScore: 12,
+        isMandatory: false,
+        order: 2,
+      },
+
+      // Scope Management Criteria
+      {
+        standardId: seededStandards[2]._id,
+        name: 'Requirements Documentation',
+        description: 'Complete and validated requirements',
+        requirement: 'Requirements traceability matrix',
+        evidenceType: 'document' as const,
+        evidenceDescription: 'Requirements documentation',
+        scoringMethod: 'partial' as const,
+        maxScore: 15,
+        isMandatory: true,
+        order: 1,
+      },
+      {
+        standardId: seededStandards[2]._id,
+        name: 'Change Control Process',
+        description: 'Formal change management procedures',
+        requirement: 'Documented change control process',
+        evidenceType: 'document' as const,
+        evidenceDescription: 'Change control procedure document',
+        scoringMethod: 'binary' as const,
+        maxScore: 10,
+        isMandatory: true,
+        order: 2,
+      },
+
+      // Risk Management Criteria
+      {
+        standardId: seededStandards[3]._id,
+        name: 'Risk Register',
+        description: 'Comprehensive risk identification and tracking',
+        requirement: 'Active risk register with mitigation plans',
+        evidenceType: 'document' as const,
+        evidenceDescription: 'Risk register document',
+        scoringMethod: 'partial' as const,
+        maxScore: 20,
+        isMandatory: true,
+        order: 1,
+      },
+      {
+        standardId: seededStandards[3]._id,
+        name: 'Risk Response Planning',
+        description: 'Proactive risk response strategies',
+        requirement: 'Documented risk response strategies',
+        evidenceType: 'document' as const,
+        evidenceDescription: 'Risk response plan',
+        scoringMethod: 'scale' as const,
+        maxScore: 15,
+        isMandatory: true,
+        order: 2,
+      },
+    ];
+
+    const seededCriteria = [];
+
+    for (const criteriaData of pmiCriteria) {
+      const criteriaId = await ctx.db.insert('pmiStandardCriteria', {
+        ...criteriaData,
+        createdAt: now,
+        updatedAt: now,
+      });
+
+      const criteria = await ctx.db.get(criteriaId);
+      if (criteria) {
+        seededCriteria.push(criteria);
+      }
+    }
+
+    // Seed some initial compliance evaluations for existing projects
+    const complianceEvaluations = [
+      {
+        projectId: seededProjects[0]._id, // CRM System Implementation
+        standardId: seededStandards[0]._id, // Project Charter
+        overallScore: 85,
+        evaluatorId: portfolioManager._id,
+        notes: 'Strong business case, minor gaps in stakeholder analysis',
+      },
+      {
+        projectId: seededProjects[0]._id,
+        standardId: seededStandards[3]._id, // Risk Management
+        overallScore: 78,
+        evaluatorId: portfolioManager._id,
+        notes: 'Good risk identification, needs improved response planning',
+      },
+      {
+        projectId: seededProjects[1]._id, // Network Security Upgrade
+        standardId: seededStandards[2]._id, // Scope Management
+        overallScore: 92,
+        evaluatorId: portfolioManager._id,
+        notes: 'Excellent scope documentation and change control',
+      },
+    ];
+
+    const seededEvaluations = [];
+
+    for (const evalData of complianceEvaluations) {
+      const evalId = await ctx.db.insert('complianceEvaluations', {
+        ...evalData,
+        evaluatedAt: now,
+        createdAt: now,
+      });
+
+      const evaluation = await ctx.db.get(evalId);
+      if (evaluation) {
+        seededEvaluations.push(evaluation);
+      }
+    }
+
     return {
       users: seededUsers.length,
       portfolios: seededPortfolios.length,
       projects: seededProjects.length,
       risks: seededRisks.length,
-      message: 'Seed completed successfully with comprehensive mock data',
+      pmiStandards: seededStandards.length,
+      pmiCriteria: seededCriteria.length,
+      complianceEvaluations: seededEvaluations.length,
+      message: 'Seed completed successfully with comprehensive mock data including PMI standards',
       userMap: seededUsers.map(u => ({ mockId: u.mockId, convexId: u.convexId.toString() })),
       riskBreakdown: {
         critical: seededRisks.filter(r => r.severity === 'critical').length,

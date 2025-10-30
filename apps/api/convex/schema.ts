@@ -104,4 +104,83 @@ export default defineSchema({
   })
     .index('by_email', ['email'])
     .index('by_role', ['role']),
+
+  // PMI Standards Database for Epic 3
+  pmiStandards: defineTable({
+    name: v.string(),
+    description: v.string(),
+    category: v.union(v.literal('portfolio'), v.literal('program'), v.literal('project')),
+    level: v.union(v.literal('foundational'), v.literal('intermediate'), v.literal('advanced')),
+    weight: v.number(), // Scoring weight (0-1)
+    version: v.string(),
+    isActive: v.boolean(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_category', ['category'])
+    .index('by_level', ['level'])
+    .index('by_active', ['isActive'])
+    .index('by_version', ['version']),
+
+  pmiStandardCriteria: defineTable({
+    standardId: v.id('pmiStandards'),
+    name: v.string(),
+    description: v.string(),
+    requirement: v.string(),
+    evidenceType: v.union(
+      v.literal('document'),
+      v.literal('link'),
+      v.literal('text'),
+      v.literal('file')
+    ),
+    evidenceDescription: v.string(),
+    scoringMethod: v.union(v.literal('binary'), v.literal('partial'), v.literal('scale')),
+    maxScore: v.number(),
+    isMandatory: v.boolean(),
+    order: v.number(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_standard', ['standardId'])
+    .index('by_order', ['order'])
+    .index('by_mandatory', ['isMandatory']),
+
+  projectCompliance: defineTable({
+    projectId: v.id('projects'),
+    standardId: v.id('pmiStandards'),
+    criteriaId: v.id('pmiStandardCriteria'),
+    status: v.union(
+      v.literal('not_started'),
+      v.literal('in_progress'),
+      v.literal('submitted'),
+      v.literal('approved'),
+      v.literal('rejected')
+    ),
+    score: v.number(),
+    evidence: v.optional(v.string()),
+    evidenceUrl: v.optional(v.string()),
+    reviewerId: v.optional(v.id('users')),
+    reviewedAt: v.optional(v.number()),
+    submittedAt: v.optional(v.number()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_project', ['projectId'])
+    .index('by_standard', ['standardId'])
+    .index('by_criteria', ['criteriaId'])
+    .index('by_status', ['status'])
+    .index('by_reviewer', ['reviewerId']),
+
+  complianceEvaluations: defineTable({
+    projectId: v.id('projects'),
+    standardId: v.id('pmiStandards'),
+    overallScore: v.number(),
+    evaluatedAt: v.number(),
+    evaluatorId: v.id('users'),
+    notes: v.optional(v.string()),
+    createdAt: v.number(),
+  })
+    .index('by_project', ['projectId'])
+    .index('by_standard', ['standardId'])
+    .index('by_evaluated_at', ['evaluatedAt']),
 });
