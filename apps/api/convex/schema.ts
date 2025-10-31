@@ -221,4 +221,88 @@ export default defineSchema({
     .index('by_project', ['projectId'])
     .index('by_created_at', ['createdAt'])
     .index('by_read_status', ['isRead']),
+
+  // Evidence Management tables for Story 3.2.2
+  evidence: defineTable({
+    projectId: v.id('projects'),
+    criteriaId: v.id('pmiStandardCriteria'),
+    standardId: v.id('pmiStandards'),
+    title: v.string(),
+    description: v.optional(v.string()),
+    evidenceType: v.union(
+      v.literal('document'),
+      v.literal('link'),
+      v.literal('text'),
+      v.literal('file')
+    ),
+    content: v.string(), // URL, file path, or text content
+    fileSize: v.optional(v.number()),
+    mimeType: v.optional(v.string()),
+    status: v.union(
+      v.literal('draft'),
+      v.literal('submitted'),
+      v.literal('under_review'),
+      v.literal('approved'),
+      v.literal('rejected'),
+      v.literal('archived')
+    ),
+    version: v.number(),
+    parentEvidenceId: v.optional(v.id('evidence')), // For version control
+    submittedBy: v.id('users'),
+    submittedAt: v.optional(v.number()),
+    reviewedBy: v.optional(v.id('users')),
+    reviewedAt: v.optional(v.number()),
+    reviewNotes: v.optional(v.string()),
+    tags: v.array(v.string()),
+    isLatest: v.boolean(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_project', ['projectId'])
+    .index('by_criteria', ['criteriaId'])
+    .index('by_standard', ['standardId'])
+    .index('by_status', ['status'])
+    .index('by_submitted_by', ['submittedBy'])
+    .index('by_reviewed_by', ['reviewedBy'])
+    .index('by_version', ['version'])
+    .index('by_latest', ['isLatest'])
+    .index('by_created_at', ['createdAt']),
+
+  evidenceBulkOperations: defineTable({
+    operationId: v.string(),
+    projectId: v.id('projects'),
+    operationType: v.union(
+      v.literal('upload'),
+      v.literal('status_update'),
+      v.literal('delete'),
+      v.literal('archive')
+    ),
+    status: v.union(
+      v.literal('pending'),
+      v.literal('processing'),
+      v.literal('completed'),
+      v.literal('failed')
+    ),
+    totalItems: v.number(),
+    processedItems: v.number(),
+    failedItems: v.number(),
+    results: v.optional(
+      v.array(
+        v.object({
+          evidenceId: v.id('evidence'),
+          status: v.string(),
+          error: v.optional(v.string()),
+        })
+      )
+    ),
+    initiatedBy: v.id('users'),
+    startedAt: v.number(),
+    completedAt: v.optional(v.number()),
+    createdAt: v.number(),
+  })
+    .index('by_operation_id', ['operationId'])
+    .index('by_project', ['projectId'])
+    .index('by_status', ['status'])
+    .index('by_initiated_by', ['initiatedBy'])
+    .index('by_created_at', ['createdAt']),
 });
