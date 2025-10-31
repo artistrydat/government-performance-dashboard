@@ -409,6 +409,87 @@ declare const _default: import("convex/server").SchemaDefinition<{
         by_initiated_by: ["initiatedBy", "_creationTime"];
         by_created_at: ["createdAt", "_creationTime"];
     }, {}, {}>;
+    complianceReportRequests: import("convex/server").TableDefinition<import("convex/values").VObject<{
+        reportUrl?: string | undefined;
+        errorMessage?: string | undefined;
+        status: "completed" | "pending" | "processing" | "failed";
+        createdAt: number;
+        updatedAt: number;
+        reportType: string;
+        parameters: {
+            portfolioId?: import("convex/values").GenericId<"portfolios"> | undefined;
+            projectId?: import("convex/values").GenericId<"projects"> | undefined;
+            dateRange?: {
+                startDate: number;
+                endDate: number;
+            } | undefined;
+        };
+        requestedBy: import("convex/values").GenericId<"users">;
+    }, {
+        reportType: import("convex/values").VString<string, "required">;
+        parameters: import("convex/values").VObject<{
+            portfolioId?: import("convex/values").GenericId<"portfolios"> | undefined;
+            projectId?: import("convex/values").GenericId<"projects"> | undefined;
+            dateRange?: {
+                startDate: number;
+                endDate: number;
+            } | undefined;
+        }, {
+            portfolioId: import("convex/values").VId<import("convex/values").GenericId<"portfolios"> | undefined, "optional">;
+            projectId: import("convex/values").VId<import("convex/values").GenericId<"projects"> | undefined, "optional">;
+            dateRange: import("convex/values").VObject<{
+                startDate: number;
+                endDate: number;
+            } | undefined, {
+                startDate: import("convex/values").VFloat64<number, "required">;
+                endDate: import("convex/values").VFloat64<number, "required">;
+            }, "optional", "startDate" | "endDate">;
+        }, "required", "portfolioId" | "projectId" | "dateRange" | "dateRange.startDate" | "dateRange.endDate">;
+        requestedBy: import("convex/values").VId<import("convex/values").GenericId<"users">, "required">;
+        status: import("convex/values").VUnion<"completed" | "pending" | "processing" | "failed", [import("convex/values").VLiteral<"pending", "required">, import("convex/values").VLiteral<"processing", "required">, import("convex/values").VLiteral<"completed", "required">, import("convex/values").VLiteral<"failed", "required">], "required", never>;
+        reportUrl: import("convex/values").VString<string | undefined, "optional">;
+        errorMessage: import("convex/values").VString<string | undefined, "optional">;
+        createdAt: import("convex/values").VFloat64<number, "required">;
+        updatedAt: import("convex/values").VFloat64<number, "required">;
+    }, "required", "status" | "createdAt" | "updatedAt" | "reportType" | "parameters" | "requestedBy" | "reportUrl" | "errorMessage" | "parameters.portfolioId" | "parameters.projectId" | "parameters.dateRange" | "parameters.dateRange.startDate" | "parameters.dateRange.endDate">, {
+        by_requested_by: ["requestedBy", "_creationTime"];
+        by_status: ["status", "_creationTime"];
+        by_created_at: ["createdAt", "_creationTime"];
+    }, {}, {}>;
+    complianceReportSchedules: import("convex/server").TableDefinition<import("convex/values").VObject<{
+        createdAt: number;
+        updatedAt: number;
+        isActive: boolean;
+        frequency: "daily" | "weekly" | "monthly";
+        reportType: string;
+        parameters: {
+            portfolioId?: import("convex/values").GenericId<"portfolios"> | undefined;
+            projectId?: import("convex/values").GenericId<"projects"> | undefined;
+        };
+        recipients: import("convex/values").GenericId<"users">[];
+        nextRunTime: number;
+        scheduledBy: import("convex/values").GenericId<"users">;
+    }, {
+        reportType: import("convex/values").VString<string, "required">;
+        frequency: import("convex/values").VUnion<"daily" | "weekly" | "monthly", [import("convex/values").VLiteral<"daily", "required">, import("convex/values").VLiteral<"weekly", "required">, import("convex/values").VLiteral<"monthly", "required">], "required", never>;
+        recipients: import("convex/values").VArray<import("convex/values").GenericId<"users">[], import("convex/values").VId<import("convex/values").GenericId<"users">, "required">, "required">;
+        parameters: import("convex/values").VObject<{
+            portfolioId?: import("convex/values").GenericId<"portfolios"> | undefined;
+            projectId?: import("convex/values").GenericId<"projects"> | undefined;
+        }, {
+            portfolioId: import("convex/values").VId<import("convex/values").GenericId<"portfolios"> | undefined, "optional">;
+            projectId: import("convex/values").VId<import("convex/values").GenericId<"projects"> | undefined, "optional">;
+        }, "required", "portfolioId" | "projectId">;
+        nextRunTime: import("convex/values").VFloat64<number, "required">;
+        isActive: import("convex/values").VBoolean<boolean, "required">;
+        scheduledBy: import("convex/values").VId<import("convex/values").GenericId<"users">, "required">;
+        createdAt: import("convex/values").VFloat64<number, "required">;
+        updatedAt: import("convex/values").VFloat64<number, "required">;
+    }, "required", "createdAt" | "updatedAt" | "isActive" | "frequency" | "reportType" | "parameters" | "parameters.portfolioId" | "parameters.projectId" | "recipients" | "nextRunTime" | "scheduledBy">, {
+        by_next_run_time: ["nextRunTime", "_creationTime"];
+        by_active: ["isActive", "_creationTime"];
+        by_scheduled_by: ["scheduledBy", "_creationTime"];
+    }, {}, {}>;
 }, true>;
 export default _default;
 //# sourceMappingURL=schema.d.ts.map

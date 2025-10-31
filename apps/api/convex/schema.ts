@@ -305,4 +305,51 @@ export default defineSchema({
     .index('by_status', ['status'])
     .index('by_initiated_by', ['initiatedBy'])
     .index('by_created_at', ['createdAt']),
+
+  // Report generation tables for Story 3.3.2
+  complianceReportRequests: defineTable({
+    reportType: v.string(),
+    parameters: v.object({
+      portfolioId: v.optional(v.id('portfolios')),
+      projectId: v.optional(v.id('projects')),
+      dateRange: v.optional(
+        v.object({
+          startDate: v.number(),
+          endDate: v.number(),
+        })
+      ),
+    }),
+    requestedBy: v.id('users'),
+    status: v.union(
+      v.literal('pending'),
+      v.literal('processing'),
+      v.literal('completed'),
+      v.literal('failed')
+    ),
+    reportUrl: v.optional(v.string()),
+    errorMessage: v.optional(v.string()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_requested_by', ['requestedBy'])
+    .index('by_status', ['status'])
+    .index('by_created_at', ['createdAt']),
+
+  complianceReportSchedules: defineTable({
+    reportType: v.string(),
+    frequency: v.union(v.literal('daily'), v.literal('weekly'), v.literal('monthly')),
+    recipients: v.array(v.id('users')),
+    parameters: v.object({
+      portfolioId: v.optional(v.id('portfolios')),
+      projectId: v.optional(v.id('projects')),
+    }),
+    nextRunTime: v.number(),
+    isActive: v.boolean(),
+    scheduledBy: v.id('users'),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_next_run_time', ['nextRunTime'])
+    .index('by_active', ['isActive'])
+    .index('by_scheduled_by', ['scheduledBy']),
 });

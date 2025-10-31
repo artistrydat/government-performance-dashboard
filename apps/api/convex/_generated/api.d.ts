@@ -11,6 +11,7 @@
 import type * as automatedCompliance from "../automatedCompliance.js";
 import type * as complianceDashboard from "../complianceDashboard.js";
 import type * as complianceEvaluations from "../complianceEvaluations.js";
+import type * as complianceReports from "../complianceReports.js";
 import type * as evaluationEngine from "../evaluationEngine.js";
 import type * as evidenceManagement from "../evidenceManagement.js";
 import type * as pmiStandardCriteria from "../pmiStandardCriteria.js";
@@ -42,6 +43,7 @@ declare const fullApi: ApiFromModules<{
   automatedCompliance: typeof automatedCompliance;
   complianceDashboard: typeof complianceDashboard;
   complianceEvaluations: typeof complianceEvaluations;
+  complianceReports: typeof complianceReports;
   evaluationEngine: typeof evaluationEngine;
   evidenceManagement: typeof evidenceManagement;
   pmiStandardCriteria: typeof pmiStandardCriteria;

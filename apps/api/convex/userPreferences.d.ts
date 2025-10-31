@@ -40,18 +40,18 @@ export declare const getUserPreferences: import("convex/server").RegisteredQuery
 export declare const updateUserPreferences: import("convex/server").RegisteredMutation<"public", {
     userId: string;
     preferences: {
-        theme: "light" | "dark" | "auto";
+        theme: "light" | "auto" | "dark";
         dashboardLayout: {
             widgets: {
                 id: string;
                 type: string;
-                size: {
-                    width: number;
-                    height: number;
-                };
                 position: {
                     x: number;
                     y: number;
+                };
+                size: {
+                    width: number;
+                    height: number;
                 };
                 visible: boolean;
             }[];
@@ -75,18 +75,18 @@ export declare const updateUserPreferences: import("convex/server").RegisteredMu
         };
     };
 }, Promise<{
-    theme: "light" | "dark" | "auto";
+    theme: "light" | "auto" | "dark";
     dashboardLayout: {
         widgets: {
             id: string;
             type: string;
-            size: {
-                width: number;
-                height: number;
-            };
             position: {
                 x: number;
                 y: number;
+            };
+            size: {
+                width: number;
+                height: number;
             };
             visible: boolean;
         }[];
