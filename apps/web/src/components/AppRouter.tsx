@@ -9,6 +9,7 @@ import ExecutiveRiskDashboard from './ExecutiveRiskDashboard';
 import PortfolioList from './PortfolioList';
 import PortfolioRiskManagement from './PortfolioRiskManagement';
 import ProjectList from './ProjectList';
+import ComplianceCenter from './ComplianceCenter';
 
 const RiskManagement: React.FC = () => (
   <div className="p-8">
@@ -180,6 +181,17 @@ const AppRouter: React.FC = () => {
             <ProtectedRoute routePath="/compliance">
               <MainDashboardLayout userRole={user?.role} currentPath="/compliance">
                 <ComplianceReports />
+              </MainDashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/compliance-center"
+          element={
+            <ProtectedRoute routePath="/compliance-center">
+              <MainDashboardLayout userRole={user?.role} currentPath="/compliance-center">
+                <ComplianceCenter />
               </MainDashboardLayout>
             </ProtectedRoute>
           }
