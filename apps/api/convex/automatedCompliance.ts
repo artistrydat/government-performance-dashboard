@@ -1,6 +1,5 @@
-import { query, mutation, action } from './_generated/server';
+import { query, mutation } from './_generated/server';
 import { v } from 'convex/values';
-import { Id } from './_generated/dataModel';
 
 // Types for automated compliance checking
 export interface ComplianceCheckResult {
@@ -138,7 +137,6 @@ export const executeBulkEvaluation = mutation({
     evaluatorId: v.string(),
   },
   handler: async (ctx, args): Promise<ComplianceCheckResult[]> => {
-    const now = Date.now();
     const results: ComplianceCheckResult[] = [];
 
     // Get all projects from specified portfolios
@@ -153,17 +151,11 @@ export const executeBulkEvaluation = mutation({
     for (const project of projects) {
       for (const standardId of args.standardIds) {
         try {
-          const result = await evaluateProjectCompliance(
-            ctx,
-            project._id,
-            standardId,
-            args.evaluatorId,
-            now
-          );
+          const result = await evaluateProjectCompliance(ctx, project._id, standardId);
           results.push(result);
 
           // Generate alerts for non-compliance
-          const alerts = await generateComplianceAlerts(ctx, result);
+          const alerts = await generateComplianceAlerts(result);
           if (alerts.length > 0) {
             await createComplianceNotifications(ctx, project._id, standardId, alerts);
           }
@@ -184,9 +176,7 @@ export const executeBulkEvaluation = mutation({
 async function evaluateProjectCompliance(
   ctx: any,
   projectId: string,
-  standardId: string,
-  evaluatorId: string,
-  evaluationTime: number
+  standardId: string
 ): Promise<ComplianceCheckResult> {
   // Use existing evaluation engine
   const evaluationResult = await ctx.db
@@ -218,11 +208,11 @@ async function evaluateProjectCompliance(
   const missingCriteria = await getMissingCriteria(ctx, projectId, standardId);
 
   // Generate alerts
-  const alerts = await generateComplianceAlerts(ctx, {
+  const alerts = await generateComplianceAlerts({
     projectId,
-    projectName: project.name,
+    projectName: (project as any).name,
     standardId,
-    standardName: standard.name,
+    standardName: (standard as any).name,
     overallScore: evaluationResult?.overallScore || 0,
     status: determineComplianceStatus(evaluationResult?.overallScore || 0),
     lastEvaluatedAt: evaluationResult?.evaluatedAt || 0,
@@ -233,9 +223,9 @@ async function evaluateProjectCompliance(
 
   return {
     projectId,
-    projectName: project.name,
+    projectName: (project as any).name,
     standardId,
-    standardName: standard.name,
+    standardName: (standard as any).name,
     overallScore: evaluationResult?.overallScore || 0,
     status: determineComplianceStatus(evaluationResult?.overallScore || 0),
     lastEvaluatedAt: evaluationResult?.evaluatedAt || 0,
@@ -299,10 +289,7 @@ async function getMissingCriteria(
 }
 
 // Generate compliance alerts based on evaluation results
-async function generateComplianceAlerts(
-  ctx: any,
-  result: ComplianceCheckResult
-): Promise<ComplianceAlert[]> {
+async function generateComplianceAlerts(result: ComplianceCheckResult): Promise<ComplianceAlert[]> {
   const alerts: ComplianceAlert[] = [];
 
   // Non-compliant alert
@@ -397,13 +384,7 @@ export const getRealTimeComplianceStatus = query({
 
     for (const standard of standards) {
       try {
-        const result = await evaluateProjectCompliance(
-          ctx,
-          args.projectId,
-          standard._id,
-          'system',
-          Date.now()
-        );
+        const result = await evaluateProjectCompliance(ctx, args.projectId, standard._id);
         results.push(result);
       } catch (error) {
         console.error(
@@ -475,7 +456,7 @@ export const getPortfolioComplianceSummary = query({
             alerts: [],
           };
 
-          const alerts = await generateComplianceAlerts(ctx, result);
+          const alerts = await generateComplianceAlerts(result);
           allAlerts.push(...alerts);
         }
       }

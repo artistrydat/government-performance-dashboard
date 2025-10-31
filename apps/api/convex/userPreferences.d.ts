@@ -45,13 +45,13 @@ export declare const updateUserPreferences: import("convex/server").RegisteredMu
             widgets: {
                 id: string;
                 type: string;
-                position: {
-                    x: number;
-                    y: number;
-                };
                 size: {
                     width: number;
                     height: number;
+                };
+                position: {
+                    x: number;
+                    y: number;
                 };
                 visible: boolean;
             }[];
@@ -80,13 +80,13 @@ export declare const updateUserPreferences: import("convex/server").RegisteredMu
         widgets: {
             id: string;
             type: string;
-            position: {
-                x: number;
-                y: number;
-            };
             size: {
                 width: number;
                 height: number;
+            };
+            position: {
+                x: number;
+                y: number;
             };
             visible: boolean;
         }[];

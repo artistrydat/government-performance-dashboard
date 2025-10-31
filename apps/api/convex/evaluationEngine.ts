@@ -1,5 +1,6 @@
 import { query, mutation } from './_generated/server';
 import { v } from 'convex/values';
+import { Doc } from './_generated/dataModel';
 
 // Types for evaluation results
 export interface EvaluationResult {
@@ -79,7 +80,7 @@ export const evaluateProjectCompliance = mutation({
         record => record.criteriaId === criterion._id
       );
 
-      const result = await evaluateCriteria(ctx, criterion, complianceRecord);
+      const result = await evaluateCriteria(criterion, complianceRecord || null);
       criteriaResults.push(result);
 
       totalPossibleScore += criterion.maxScore;
@@ -133,9 +134,8 @@ export const evaluateProjectCompliance = mutation({
 
 // Evaluate individual criteria
 async function evaluateCriteria(
-  ctx: any,
-  criterion: any,
-  complianceRecord: any
+  criterion: Doc<'pmiStandardCriteria'>,
+  complianceRecord: Doc<'projectCompliance'> | null
 ): Promise<CriteriaResult> {
   let score = 0;
   let status: 'met' | 'partial' | 'not_met' | 'not_applicable' = 'not_met';
@@ -188,7 +188,10 @@ async function evaluateCriteria(
 }
 
 // Validate evidence against criteria requirements
-async function validateEvidence(complianceRecord: any, criterion: any): Promise<ValidationResult> {
+async function validateEvidence(
+  complianceRecord: Doc<'projectCompliance'>,
+  criterion: Doc<'pmiStandardCriteria'>
+): Promise<ValidationResult> {
   const { evidence, evidenceUrl, status } = complianceRecord;
   const { evidenceType, scoringMethod, maxScore } = criterion;
 
@@ -338,7 +341,7 @@ async function performEvaluation(
       (record: any) => record.criteriaId === criterion._id
     );
 
-    const result = await evaluateCriteria(ctx, criterion, complianceRecord);
+    const result = await evaluateCriteria(criterion, complianceRecord || null);
     criteriaResults.push(result);
 
     totalPossibleScore += criterion.maxScore;
@@ -390,10 +393,10 @@ async function performEvaluation(
 // Get evaluation statistics
 export const getEvaluationStatistics = query({
   args: { projectId: v.id('projects') },
-  handler: async (ctx, args) => {
-    const evaluations = await ctx.db
+  handler: async (_ctx, args) => {
+    const evaluations = await _ctx.db
       .query('complianceEvaluations')
-      .withIndex('by_project', q => q.eq('projectId', args.projectId))
+      .withIndex('by_project', (q: any) => q.eq('projectId', args.projectId))
       .collect();
 
     if (evaluations.length === 0) {
@@ -407,15 +410,16 @@ export const getEvaluationStatistics = query({
       };
     }
 
-    const scores = evaluations.map(e => e.overallScore);
-    const averageScore = scores.reduce((sum, score) => sum + score, 0) / scores.length;
+    const scores = evaluations.map((e: any) => e.overallScore);
+    const averageScore =
+      scores.reduce((sum: number, score: number) => sum + score, 0) / scores.length;
     const bestScore = Math.max(...scores);
     const worstScore = Math.min(...scores);
 
     // Calculate trend (simple implementation)
     let improvementTrend: 'improving' | 'declining' | 'stable' = 'stable';
     if (evaluations.length >= 2) {
-      const sorted = evaluations.sort((a, b) => a.evaluatedAt - b.evaluatedAt);
+      const sorted = evaluations.sort((a: any, b: any) => a.evaluatedAt - b.evaluatedAt);
       const firstScore = sorted[0].overallScore;
       const lastScore = sorted[sorted.length - 1].overallScore;
 

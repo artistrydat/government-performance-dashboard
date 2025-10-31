@@ -13,26 +13,26 @@ export declare const projectValidation: {
         startDate: number;
         endDate: number;
         milestones: {
-            date: number;
             name: string;
             status: string;
+            date: number;
         }[];
     }, {
         startDate: import("convex/values").VFloat64<number, "required">;
         endDate: import("convex/values").VFloat64<number, "required">;
         milestones: import("convex/values").VArray<{
-            date: number;
             name: string;
             status: string;
+            date: number;
         }[], import("convex/values").VObject<{
-            date: number;
             name: string;
             status: string;
+            date: number;
         }, {
             name: import("convex/values").VString<string, "required">;
             date: import("convex/values").VFloat64<number, "required">;
             status: import("convex/values").VString<string, "required">;
-        }, "required", "date" | "name" | "status">, "required">;
+        }, "required", "name" | "status" | "date">, "required">;
     }, "required", "startDate" | "endDate" | "milestones">;
     portfolioId: import("convex/values").VId<import("convex/values").GenericId<"portfolios"> | undefined, "optional">;
     ownerId: import("convex/values").VId<import("convex/values").GenericId<"users"> | undefined, "optional">;

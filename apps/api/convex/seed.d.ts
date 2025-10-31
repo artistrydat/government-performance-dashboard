@@ -3,6 +3,9 @@ export declare const seedAll: import("convex/server").RegisteredMutation<"public
     portfolios: number;
     projects: number;
     risks: number;
+    pmiStandards: number;
+    pmiCriteria: number;
+    complianceEvaluations: number;
     message: string;
     userMap: {
         mockId: string;

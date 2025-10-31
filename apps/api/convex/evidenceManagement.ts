@@ -14,19 +14,6 @@ import { Id } from './_generated/dataModel';
  */
 
 // Types for evidence operations
-interface EvidenceSearchFilters {
-  projectId?: string;
-  standardId?: string;
-  criteriaId?: string;
-  status?: string[];
-  evidenceType?: string[];
-  tags?: string[];
-  submittedBy?: string;
-  dateRange?: {
-    start: number;
-    end: number;
-  };
-}
 
 /**
  * Create new evidence record

@@ -1,6 +1,6 @@
 export declare const create: import("convex/server").RegisteredMutation<"public", {
-    email: string;
     name: string;
+    email: string;
     role: "executive" | "portfolio_manager" | "project_officer";
     department: string;
 }, Promise<import("convex/values").GenericId<"users">>>;
@@ -9,20 +9,20 @@ export declare const get: import("convex/server").RegisteredQuery<"public", {
 }, Promise<{
     _id: import("convex/values").GenericId<"users">;
     _creationTime: number;
-    email: string;
     name: string;
     createdAt: number;
     updatedAt: number;
+    email: string;
     role: "executive" | "portfolio_manager" | "project_officer";
     department: string;
 }>>;
 export declare const list: import("convex/server").RegisteredQuery<"public", {}, Promise<{
     _id: import("convex/values").GenericId<"users">;
     _creationTime: number;
-    email: string;
     name: string;
     createdAt: number;
     updatedAt: number;
+    email: string;
     role: "executive" | "portfolio_manager" | "project_officer";
     department: string;
 }[]>>;
@@ -31,10 +31,10 @@ export declare const getByEmail: import("convex/server").RegisteredQuery<"public
 }, Promise<{
     _id: import("convex/values").GenericId<"users">;
     _creationTime: number;
-    email: string;
     name: string;
     createdAt: number;
     updatedAt: number;
+    email: string;
     role: "executive" | "portfolio_manager" | "project_officer";
     department: string;
 }>>;
@@ -43,16 +43,16 @@ export declare const listByRole: import("convex/server").RegisteredQuery<"public
 }, Promise<{
     _id: import("convex/values").GenericId<"users">;
     _creationTime: number;
-    email: string;
     name: string;
     createdAt: number;
     updatedAt: number;
+    email: string;
     role: "executive" | "portfolio_manager" | "project_officer";
     department: string;
 }[]>>;
 export declare const update: import("convex/server").RegisteredMutation<"public", {
-    email: string;
     name: string;
+    email: string;
     role: "executive" | "portfolio_manager" | "project_officer";
     department: string;
     userId: import("convex/values").GenericId<"users">;
@@ -75,10 +75,10 @@ export declare const getWithDetails: import("convex/server").RegisteredQuery<"pu
     user: {
         _id: import("convex/values").GenericId<"users">;
         _creationTime: number;
-        email: string;
         name: string;
         createdAt: number;
         updatedAt: number;
+        email: string;
         role: "executive" | "portfolio_manager" | "project_officer";
         department: string;
     };
@@ -96,9 +96,9 @@ export declare const getWithDetails: import("convex/server").RegisteredQuery<"pu
             startDate: number;
             endDate: number;
             milestones: {
-                date: number;
                 name: string;
                 status: string;
+                date: number;
             }[];
         };
         teamMembers: import("convex/values").GenericId<"users">[];
@@ -127,8 +127,8 @@ export declare const getWithDetails: import("convex/server").RegisteredQuery<"pu
     }[];
 }>>;
 export declare const hasPermission: import("convex/server").RegisteredQuery<"public", {
-    requiredRole: "executive" | "portfolio_manager" | "project_officer";
     userId: import("convex/values").GenericId<"users">;
+    requiredRole: "executive" | "portfolio_manager" | "project_officer";
 }, Promise<boolean>>;
 export declare const canAccessProject: import("convex/server").RegisteredQuery<"public", {
     projectId: import("convex/values").GenericId<"projects">;

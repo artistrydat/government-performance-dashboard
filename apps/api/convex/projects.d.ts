@@ -10,9 +10,9 @@ export declare const create: import("convex/server").RegisteredMutation<"public"
         startDate: number;
         endDate: number;
         milestones: {
-            date: number;
             name: string;
             status: string;
+            date: number;
         }[];
     };
     teamMembers: import("convex/values").GenericId<"users">[];
@@ -36,9 +36,9 @@ export declare const get: import("convex/server").RegisteredQuery<"public", {
         startDate: number;
         endDate: number;
         milestones: {
-            date: number;
             name: string;
             status: string;
+            date: number;
         }[];
     };
     teamMembers: import("convex/values").GenericId<"users">[];
@@ -62,9 +62,9 @@ export declare const list: import("convex/server").RegisteredQuery<"public", {},
         startDate: number;
         endDate: number;
         milestones: {
-            date: number;
             name: string;
             status: string;
+            date: number;
         }[];
     };
     teamMembers: import("convex/values").GenericId<"users">[];
@@ -90,9 +90,9 @@ export declare const listByStatus: import("convex/server").RegisteredQuery<"publ
         startDate: number;
         endDate: number;
         milestones: {
-            date: number;
             name: string;
             status: string;
+            date: number;
         }[];
     };
     teamMembers: import("convex/values").GenericId<"users">[];
@@ -118,9 +118,9 @@ export declare const listByPortfolio: import("convex/server").RegisteredQuery<"p
         startDate: number;
         endDate: number;
         milestones: {
-            date: number;
             name: string;
             status: string;
+            date: number;
         }[];
     };
     teamMembers: import("convex/values").GenericId<"users">[];
@@ -142,9 +142,9 @@ export declare const update: import("convex/server").RegisteredMutation<"public"
         startDate: number;
         endDate: number;
         milestones: {
-            date: number;
             name: string;
             status: string;
+            date: number;
         }[];
     };
     teamMembers: import("convex/values").GenericId<"users">[];
