@@ -352,4 +352,111 @@ export default defineSchema({
     .index('by_next_run_time', ['nextRunTime'])
     .index('by_active', ['isActive'])
     .index('by_scheduled_by', ['scheduledBy']),
+
+  // Custom Rules tables for Story 3.5.1
+  customRules: defineTable({
+    name: v.string(),
+    description: v.string(),
+    ruleType: v.union(v.literal('validation'), v.literal('scoring'), v.literal('workflow')),
+    condition: v.object({
+      field: v.string(),
+      operator: v.union(
+        v.literal('equals'),
+        v.literal('not_equals'),
+        v.literal('contains'),
+        v.literal('greater_than'),
+        v.literal('less_than'),
+        v.literal('in'),
+        v.literal('not_in')
+      ),
+      value: v.any(),
+      logicalOperator: v.optional(v.union(v.literal('and'), v.literal('or'))),
+      conditions: v.optional(v.array(v.any())),
+    }),
+    action: v.object({
+      type: v.union(
+        v.literal('set_score'),
+        v.literal('set_status'),
+        v.literal('send_notification'),
+        v.literal('trigger_workflow'),
+        v.literal('log_event')
+      ),
+      parameters: v.object({
+        score: v.optional(v.number()),
+        status: v.optional(v.string()),
+        notificationType: v.optional(v.string()),
+        workflowId: v.optional(v.string()),
+        message: v.optional(v.string()),
+      }),
+    }),
+    targetEntity: v.union(
+      v.literal('project'),
+      v.literal('portfolio'),
+      v.literal('standard'),
+      v.literal('evidence')
+    ),
+    isActive: v.boolean(),
+    version: v.number(),
+    templateId: v.optional(v.string()),
+    createdBy: v.id('users'),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_target_entity', ['targetEntity'])
+    .index('by_rule_type', ['ruleType'])
+    .index('by_active', ['isActive'])
+    .index('by_created_by', ['createdBy'])
+    .index('by_created_at', ['createdAt']),
+
+  ruleTemplates: defineTable({
+    name: v.string(),
+    description: v.string(),
+    ruleType: v.union(v.literal('validation'), v.literal('scoring'), v.literal('workflow')),
+    condition: v.object({
+      field: v.string(),
+      operator: v.union(
+        v.literal('equals'),
+        v.literal('not_equals'),
+        v.literal('contains'),
+        v.literal('greater_than'),
+        v.literal('less_than'),
+        v.literal('in'),
+        v.literal('not_in')
+      ),
+      value: v.any(),
+      logicalOperator: v.optional(v.union(v.literal('and'), v.literal('or'))),
+      conditions: v.optional(v.array(v.any())),
+    }),
+    action: v.object({
+      type: v.union(
+        v.literal('set_score'),
+        v.literal('set_status'),
+        v.literal('send_notification'),
+        v.literal('trigger_workflow'),
+        v.literal('log_event')
+      ),
+      parameters: v.object({
+        score: v.optional(v.number()),
+        status: v.optional(v.string()),
+        notificationType: v.optional(v.string()),
+        workflowId: v.optional(v.string()),
+        message: v.optional(v.string()),
+      }),
+    }),
+    targetEntity: v.union(
+      v.literal('project'),
+      v.literal('portfolio'),
+      v.literal('standard'),
+      v.literal('evidence')
+    ),
+    isActive: v.boolean(),
+    usageCount: v.number(),
+    createdBy: v.id('users'),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_target_entity', ['targetEntity'])
+    .index('by_rule_type', ['ruleType'])
+    .index('by_active', ['isActive'])
+    .index('by_created_by', ['createdBy']),
 });

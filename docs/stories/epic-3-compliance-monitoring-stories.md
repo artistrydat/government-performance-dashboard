@@ -367,18 +367,40 @@
 **Story:** As a compliance manager, I want to create custom compliance rules so that I can address organization-specific requirements.
 
 **Acceptance Criteria:**
-- [ ] Custom rule creation interface
-- [ ] Rule validation and testing
-- [ ] Custom rule scoring integration
-- [ ] Rule version management
-- [ ] Rule templates and sharing
-- [ ] Unit tests for custom rules
+- [x] Custom rule creation interface
+- [x] Rule validation and testing
+- [x] Custom rule scoring integration
+- [x] Rule version management
+- [x] Rule templates and sharing
+- [x] Unit tests for custom rules
 
 **Technical Details:**
-- Implement rule builder interface
-- Create rule validation system
-- Design rule testing environment
-- Set up rule template library
+- Implemented comprehensive custom rules system in Convex
+- Created rule builder interface with validation and testing capabilities
+- Designed rule execution engine with condition evaluation and action execution
+- Set up rule template library with usage tracking
+- Implemented version management and usage protection
+- Added comprehensive unit test suite
+
+**Files Created/Modified:**
+- `apps/api/convex/schema.ts` - Added customRules and ruleTemplates tables
+- `apps/api/convex/customRules.ts` - Core custom rules implementation
+- `apps/api/tests/custom-rules.test.ts` - Comprehensive unit tests
+
+**Dev Agent Record:**
+- **Agent Model Used:** Cline (BMad Dev Agent)
+- **Debug Log References:** TypeScript compilation, schema validation, test implementation
+- **Completion Notes:** Successfully implemented comprehensive custom rules system with all acceptance criteria met. System includes rule creation, validation, testing, scoring integration, version management, templates, and comprehensive unit tests.
+- **Change Log:** 
+  - Added 2 new database tables for custom rules and templates
+  - Created 8 main custom rule functions covering all operations
+  - Implemented rule validation with structured error reporting
+  - Added rule testing environment with execution timing
+  - Created template system with usage tracking
+  - Implemented version management and usage protection
+  - Added comprehensive unit test suite with 8 test cases
+
+**Status:** Ready for Review
 
 **Dependencies:** Story 3.1.2
 
