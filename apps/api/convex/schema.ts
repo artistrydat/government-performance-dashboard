@@ -603,4 +603,28 @@ export default defineSchema({
   })
     .index('by_workflow', ['workflowId'])
     .index('by_period', ['periodStart', 'periodEnd']),
+
+  // AI Predictions table for Epic 4
+  ai_predictions: defineTable({
+    type: v.union(
+      v.literal('failure'),
+      v.literal('delay'),
+      v.literal('budget'),
+      v.literal('compliance')
+    ),
+    confidence: v.number(),
+    predictedValue: v.any(),
+    timeHorizon: v.number(),
+    reasoning: v.string(),
+    recommendations: v.array(v.string()),
+    generatedAt: v.number(),
+    isActive: v.boolean(),
+    projectId: v.id('projects'),
+    modelUsed: v.string(),
+  })
+    .index('by_project', ['projectId'])
+    .index('by_type', ['type'])
+    .index('by_confidence', ['confidence'])
+    .index('by_generated_at', ['generatedAt'])
+    .index('by_active', ['isActive']),
 });

@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as aiService from "../aiService.js";
 import type * as automatedCompliance from "../automatedCompliance.js";
 import type * as complianceAnalytics from "../complianceAnalytics.js";
 import type * as complianceDashboard from "../complianceDashboard.js";
@@ -43,6 +44,7 @@ import type {
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  aiService: typeof aiService;
   automatedCompliance: typeof automatedCompliance;
   complianceAnalytics: typeof complianceAnalytics;
   complianceDashboard: typeof complianceDashboard;
