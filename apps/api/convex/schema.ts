@@ -459,4 +459,148 @@ export default defineSchema({
     .index('by_rule_type', ['ruleType'])
     .index('by_active', ['isActive'])
     .index('by_created_by', ['createdBy']),
+
+  // Compliance Workflow Automation tables for Story 3.5.2
+  complianceWorkflows: defineTable({
+    name: v.string(),
+    description: v.string(),
+    triggerType: v.union(
+      v.literal('evidence_submission'),
+      v.literal('compliance_evaluation'),
+      v.literal('schedule'),
+      v.literal('manual')
+    ),
+    triggerRuleId: v.optional(v.id('customRules')),
+    targetEntity: v.union(
+      v.literal('project'),
+      v.literal('portfolio'),
+      v.literal('standard'),
+      v.literal('evidence')
+    ),
+    steps: v.array(
+      v.object({
+        stepId: v.string(),
+        name: v.string(),
+        type: v.union(
+          v.literal('evidence_request'),
+          v.literal('approval'),
+          v.literal('notification'),
+          v.literal('escalation'),
+          v.literal('condition_check')
+        ),
+        assigneeRole: v.optional(v.string()),
+        assigneeId: v.optional(v.id('users')),
+        dueDateOffset: v.optional(v.number()), // Days from workflow start
+        escalationAfter: v.optional(v.number()), // Days before escalation
+        escalationTo: v.optional(v.id('users')),
+        conditions: v.optional(v.array(v.any())),
+        actions: v.optional(v.array(v.any())),
+        nextStepId: v.optional(v.string()),
+      })
+    ),
+    isActive: v.boolean(),
+    version: v.number(),
+    createdBy: v.id('users'),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_trigger_type', ['triggerType'])
+    .index('by_target_entity', ['targetEntity'])
+    .index('by_active', ['isActive'])
+    .index('by_created_by', ['createdBy'])
+    .index('by_created_at', ['createdAt']),
+
+  workflowInstances: defineTable({
+    workflowId: v.id('complianceWorkflows'),
+    entityId: v.string(), // Project, portfolio, standard, or evidence ID
+    currentStepId: v.string(),
+    status: v.union(
+      v.literal('active'),
+      v.literal('paused'),
+      v.literal('completed'),
+      v.literal('cancelled'),
+      v.literal('escalated')
+    ),
+    startedBy: v.id('users'),
+    startedAt: v.number(),
+    completedAt: v.optional(v.number()),
+    currentAssignee: v.optional(v.id('users')),
+    nextDueDate: v.optional(v.number()),
+    escalationLevel: v.number(),
+    metadata: v.optional(v.any()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_workflow', ['workflowId'])
+    .index('by_entity', ['entityId'])
+    .index('by_status', ['status'])
+    .index('by_current_assignee', ['currentAssignee'])
+    .index('by_next_due_date', ['nextDueDate'])
+    .index('by_created_at', ['createdAt']),
+
+  workflowSteps: defineTable({
+    instanceId: v.id('workflowInstances'),
+    stepId: v.string(),
+    stepName: v.string(),
+    stepType: v.union(
+      v.literal('evidence_request'),
+      v.literal('approval'),
+      v.literal('notification'),
+      v.literal('escalation'),
+      v.literal('condition_check')
+    ),
+    assigneeId: v.optional(v.id('users')),
+    status: v.union(
+      v.literal('pending'),
+      v.literal('in_progress'),
+      v.literal('completed'),
+      v.literal('escalated'),
+      v.literal('skipped')
+    ),
+    dueDate: v.optional(v.number()),
+    completedAt: v.optional(v.number()),
+    completedBy: v.optional(v.id('users')),
+    notes: v.optional(v.string()),
+    metadata: v.optional(v.any()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_instance', ['instanceId'])
+    .index('by_step_id', ['stepId'])
+    .index('by_status', ['status'])
+    .index('by_assignee', ['assigneeId'])
+    .index('by_due_date', ['dueDate']),
+
+  workflowEscalations: defineTable({
+    instanceId: v.id('workflowInstances'),
+    stepId: v.string(),
+    escalatedFrom: v.id('users'),
+    escalatedTo: v.id('users'),
+    reason: v.string(),
+    escalationLevel: v.number(),
+    createdAt: v.number(),
+  })
+    .index('by_instance', ['instanceId'])
+    .index('by_step', ['stepId'])
+    .index('by_escalated_to', ['escalatedTo'])
+    .index('by_created_at', ['createdAt']),
+
+  workflowAnalytics: defineTable({
+    workflowId: v.id('complianceWorkflows'),
+    instanceCount: v.number(),
+    averageCompletionTime: v.number(),
+    escalationRate: v.number(),
+    stepCompletionRates: v.array(
+      v.object({
+        stepId: v.string(),
+        completionRate: v.number(),
+        averageTime: v.number(),
+      })
+    ),
+    periodStart: v.number(),
+    periodEnd: v.number(),
+    createdAt: v.number(),
+  })
+    .index('by_workflow', ['workflowId'])
+    .index('by_period', ['periodStart', 'periodEnd']),
 });

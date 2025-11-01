@@ -2,14 +2,14 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import ComplianceCenter from '../components/ComplianceCenter';
 
-// Mock the Convex queries
-const mockUseQuery = vi.fn();
+// Use vi.hoisted to avoid hoisting issues
+const mockUseQuery = vi.hoisted(() => vi.fn());
 vi.mock('convex/react', () => ({
   useQuery: mockUseQuery,
 }));
 
-// Mock the API
-vi.mock('../../api/convex/_generated/api', () => ({
+// Mock the API using vi.hoisted
+const mockApi = vi.hoisted(() => ({
   api: {
     complianceDashboard: {
       getComplianceStatistics: { name: 'getComplianceStatistics' },
@@ -23,6 +23,8 @@ vi.mock('../../api/convex/_generated/api', () => ({
     },
   },
 }));
+
+vi.mock('../../api/convex/_generated/api', () => mockApi);
 
 const mockComplianceData = {
   complianceStats: {

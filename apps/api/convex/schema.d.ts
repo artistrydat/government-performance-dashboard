@@ -490,6 +490,381 @@ declare const _default: import("convex/server").SchemaDefinition<{
         by_active: ["isActive", "_creationTime"];
         by_scheduled_by: ["scheduledBy", "_creationTime"];
     }, {}, {}>;
+    customRules: import("convex/server").TableDefinition<import("convex/values").VObject<{
+        templateId?: string | undefined;
+        name: string;
+        description: string;
+        createdAt: number;
+        updatedAt: number;
+        version: number;
+        isActive: boolean;
+        ruleType: "validation" | "scoring" | "workflow";
+        condition: {
+            logicalOperator?: "and" | "or" | undefined;
+            conditions?: any[] | undefined;
+            field: string;
+            operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than" | "in" | "not_in";
+            value: any;
+        };
+        action: {
+            type: "set_score" | "set_status" | "send_notification" | "trigger_workflow" | "log_event";
+            parameters: {
+                status?: string | undefined;
+                score?: number | undefined;
+                message?: string | undefined;
+                notificationType?: string | undefined;
+                workflowId?: string | undefined;
+            };
+        };
+        targetEntity: "portfolio" | "project" | "evidence" | "standard";
+        createdBy: import("convex/values").GenericId<"users">;
+    }, {
+        name: import("convex/values").VString<string, "required">;
+        description: import("convex/values").VString<string, "required">;
+        ruleType: import("convex/values").VUnion<"validation" | "scoring" | "workflow", [import("convex/values").VLiteral<"validation", "required">, import("convex/values").VLiteral<"scoring", "required">, import("convex/values").VLiteral<"workflow", "required">], "required", never>;
+        condition: import("convex/values").VObject<{
+            logicalOperator?: "and" | "or" | undefined;
+            conditions?: any[] | undefined;
+            field: string;
+            operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than" | "in" | "not_in";
+            value: any;
+        }, {
+            field: import("convex/values").VString<string, "required">;
+            operator: import("convex/values").VUnion<"equals" | "not_equals" | "contains" | "greater_than" | "less_than" | "in" | "not_in", [import("convex/values").VLiteral<"equals", "required">, import("convex/values").VLiteral<"not_equals", "required">, import("convex/values").VLiteral<"contains", "required">, import("convex/values").VLiteral<"greater_than", "required">, import("convex/values").VLiteral<"less_than", "required">, import("convex/values").VLiteral<"in", "required">, import("convex/values").VLiteral<"not_in", "required">], "required", never>;
+            value: import("convex/values").VAny<any, "required", string>;
+            logicalOperator: import("convex/values").VUnion<"and" | "or" | undefined, [import("convex/values").VLiteral<"and", "required">, import("convex/values").VLiteral<"or", "required">], "optional", never>;
+            conditions: import("convex/values").VArray<any[] | undefined, import("convex/values").VAny<any, "required", string>, "optional">;
+        }, "required", "field" | "operator" | "value" | "logicalOperator" | "conditions" | `value.${string}`>;
+        action: import("convex/values").VObject<{
+            type: "set_score" | "set_status" | "send_notification" | "trigger_workflow" | "log_event";
+            parameters: {
+                status?: string | undefined;
+                score?: number | undefined;
+                message?: string | undefined;
+                notificationType?: string | undefined;
+                workflowId?: string | undefined;
+            };
+        }, {
+            type: import("convex/values").VUnion<"set_score" | "set_status" | "send_notification" | "trigger_workflow" | "log_event", [import("convex/values").VLiteral<"set_score", "required">, import("convex/values").VLiteral<"set_status", "required">, import("convex/values").VLiteral<"send_notification", "required">, import("convex/values").VLiteral<"trigger_workflow", "required">, import("convex/values").VLiteral<"log_event", "required">], "required", never>;
+            parameters: import("convex/values").VObject<{
+                status?: string | undefined;
+                score?: number | undefined;
+                message?: string | undefined;
+                notificationType?: string | undefined;
+                workflowId?: string | undefined;
+            }, {
+                score: import("convex/values").VFloat64<number | undefined, "optional">;
+                status: import("convex/values").VString<string | undefined, "optional">;
+                notificationType: import("convex/values").VString<string | undefined, "optional">;
+                workflowId: import("convex/values").VString<string | undefined, "optional">;
+                message: import("convex/values").VString<string | undefined, "optional">;
+            }, "required", "status" | "score" | "message" | "notificationType" | "workflowId">;
+        }, "required", "type" | "parameters" | "parameters.status" | "parameters.score" | "parameters.message" | "parameters.notificationType" | "parameters.workflowId">;
+        targetEntity: import("convex/values").VUnion<"portfolio" | "project" | "evidence" | "standard", [import("convex/values").VLiteral<"project", "required">, import("convex/values").VLiteral<"portfolio", "required">, import("convex/values").VLiteral<"standard", "required">, import("convex/values").VLiteral<"evidence", "required">], "required", never>;
+        isActive: import("convex/values").VBoolean<boolean, "required">;
+        version: import("convex/values").VFloat64<number, "required">;
+        templateId: import("convex/values").VString<string | undefined, "optional">;
+        createdBy: import("convex/values").VId<import("convex/values").GenericId<"users">, "required">;
+        createdAt: import("convex/values").VFloat64<number, "required">;
+        updatedAt: import("convex/values").VFloat64<number, "required">;
+    }, "required", "name" | "description" | "createdAt" | "updatedAt" | "version" | "isActive" | "ruleType" | "condition" | "action" | "targetEntity" | "templateId" | "createdBy" | "condition.field" | "condition.operator" | "condition.value" | "condition.logicalOperator" | "condition.conditions" | `condition.value.${string}` | "action.type" | "action.parameters" | "action.parameters.status" | "action.parameters.score" | "action.parameters.message" | "action.parameters.notificationType" | "action.parameters.workflowId">, {
+        by_target_entity: ["targetEntity", "_creationTime"];
+        by_rule_type: ["ruleType", "_creationTime"];
+        by_active: ["isActive", "_creationTime"];
+        by_created_by: ["createdBy", "_creationTime"];
+        by_created_at: ["createdAt", "_creationTime"];
+    }, {}, {}>;
+    ruleTemplates: import("convex/server").TableDefinition<import("convex/values").VObject<{
+        name: string;
+        description: string;
+        createdAt: number;
+        updatedAt: number;
+        isActive: boolean;
+        ruleType: "validation" | "scoring" | "workflow";
+        condition: {
+            logicalOperator?: "and" | "or" | undefined;
+            conditions?: any[] | undefined;
+            field: string;
+            operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than" | "in" | "not_in";
+            value: any;
+        };
+        action: {
+            type: "set_score" | "set_status" | "send_notification" | "trigger_workflow" | "log_event";
+            parameters: {
+                status?: string | undefined;
+                score?: number | undefined;
+                message?: string | undefined;
+                notificationType?: string | undefined;
+                workflowId?: string | undefined;
+            };
+        };
+        targetEntity: "portfolio" | "project" | "evidence" | "standard";
+        createdBy: import("convex/values").GenericId<"users">;
+        usageCount: number;
+    }, {
+        name: import("convex/values").VString<string, "required">;
+        description: import("convex/values").VString<string, "required">;
+        ruleType: import("convex/values").VUnion<"validation" | "scoring" | "workflow", [import("convex/values").VLiteral<"validation", "required">, import("convex/values").VLiteral<"scoring", "required">, import("convex/values").VLiteral<"workflow", "required">], "required", never>;
+        condition: import("convex/values").VObject<{
+            logicalOperator?: "and" | "or" | undefined;
+            conditions?: any[] | undefined;
+            field: string;
+            operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than" | "in" | "not_in";
+            value: any;
+        }, {
+            field: import("convex/values").VString<string, "required">;
+            operator: import("convex/values").VUnion<"equals" | "not_equals" | "contains" | "greater_than" | "less_than" | "in" | "not_in", [import("convex/values").VLiteral<"equals", "required">, import("convex/values").VLiteral<"not_equals", "required">, import("convex/values").VLiteral<"contains", "required">, import("convex/values").VLiteral<"greater_than", "required">, import("convex/values").VLiteral<"less_than", "required">, import("convex/values").VLiteral<"in", "required">, import("convex/values").VLiteral<"not_in", "required">], "required", never>;
+            value: import("convex/values").VAny<any, "required", string>;
+            logicalOperator: import("convex/values").VUnion<"and" | "or" | undefined, [import("convex/values").VLiteral<"and", "required">, import("convex/values").VLiteral<"or", "required">], "optional", never>;
+            conditions: import("convex/values").VArray<any[] | undefined, import("convex/values").VAny<any, "required", string>, "optional">;
+        }, "required", "field" | "operator" | "value" | "logicalOperator" | "conditions" | `value.${string}`>;
+        action: import("convex/values").VObject<{
+            type: "set_score" | "set_status" | "send_notification" | "trigger_workflow" | "log_event";
+            parameters: {
+                status?: string | undefined;
+                score?: number | undefined;
+                message?: string | undefined;
+                notificationType?: string | undefined;
+                workflowId?: string | undefined;
+            };
+        }, {
+            type: import("convex/values").VUnion<"set_score" | "set_status" | "send_notification" | "trigger_workflow" | "log_event", [import("convex/values").VLiteral<"set_score", "required">, import("convex/values").VLiteral<"set_status", "required">, import("convex/values").VLiteral<"send_notification", "required">, import("convex/values").VLiteral<"trigger_workflow", "required">, import("convex/values").VLiteral<"log_event", "required">], "required", never>;
+            parameters: import("convex/values").VObject<{
+                status?: string | undefined;
+                score?: number | undefined;
+                message?: string | undefined;
+                notificationType?: string | undefined;
+                workflowId?: string | undefined;
+            }, {
+                score: import("convex/values").VFloat64<number | undefined, "optional">;
+                status: import("convex/values").VString<string | undefined, "optional">;
+                notificationType: import("convex/values").VString<string | undefined, "optional">;
+                workflowId: import("convex/values").VString<string | undefined, "optional">;
+                message: import("convex/values").VString<string | undefined, "optional">;
+            }, "required", "status" | "score" | "message" | "notificationType" | "workflowId">;
+        }, "required", "type" | "parameters" | "parameters.status" | "parameters.score" | "parameters.message" | "parameters.notificationType" | "parameters.workflowId">;
+        targetEntity: import("convex/values").VUnion<"portfolio" | "project" | "evidence" | "standard", [import("convex/values").VLiteral<"project", "required">, import("convex/values").VLiteral<"portfolio", "required">, import("convex/values").VLiteral<"standard", "required">, import("convex/values").VLiteral<"evidence", "required">], "required", never>;
+        isActive: import("convex/values").VBoolean<boolean, "required">;
+        usageCount: import("convex/values").VFloat64<number, "required">;
+        createdBy: import("convex/values").VId<import("convex/values").GenericId<"users">, "required">;
+        createdAt: import("convex/values").VFloat64<number, "required">;
+        updatedAt: import("convex/values").VFloat64<number, "required">;
+    }, "required", "name" | "description" | "createdAt" | "updatedAt" | "isActive" | "ruleType" | "condition" | "action" | "targetEntity" | "createdBy" | "condition.field" | "condition.operator" | "condition.value" | "condition.logicalOperator" | "condition.conditions" | `condition.value.${string}` | "action.type" | "action.parameters" | "action.parameters.status" | "action.parameters.score" | "action.parameters.message" | "action.parameters.notificationType" | "action.parameters.workflowId" | "usageCount">, {
+        by_target_entity: ["targetEntity", "_creationTime"];
+        by_rule_type: ["ruleType", "_creationTime"];
+        by_active: ["isActive", "_creationTime"];
+        by_created_by: ["createdBy", "_creationTime"];
+    }, {}, {}>;
+    complianceWorkflows: import("convex/server").TableDefinition<import("convex/values").VObject<{
+        triggerRuleId?: import("convex/values").GenericId<"customRules"> | undefined;
+        name: string;
+        description: string;
+        createdAt: number;
+        updatedAt: number;
+        version: number;
+        isActive: boolean;
+        targetEntity: "portfolio" | "project" | "evidence" | "standard";
+        createdBy: import("convex/values").GenericId<"users">;
+        triggerType: "evidence_submission" | "compliance_evaluation" | "schedule" | "manual";
+        steps: {
+            conditions?: any[] | undefined;
+            assigneeRole?: string | undefined;
+            assigneeId?: import("convex/values").GenericId<"users"> | undefined;
+            dueDateOffset?: number | undefined;
+            escalationAfter?: number | undefined;
+            escalationTo?: import("convex/values").GenericId<"users"> | undefined;
+            actions?: any[] | undefined;
+            nextStepId?: string | undefined;
+            name: string;
+            type: "evidence_request" | "approval" | "notification" | "escalation" | "condition_check";
+            stepId: string;
+        }[];
+    }, {
+        name: import("convex/values").VString<string, "required">;
+        description: import("convex/values").VString<string, "required">;
+        triggerType: import("convex/values").VUnion<"evidence_submission" | "compliance_evaluation" | "schedule" | "manual", [import("convex/values").VLiteral<"evidence_submission", "required">, import("convex/values").VLiteral<"compliance_evaluation", "required">, import("convex/values").VLiteral<"schedule", "required">, import("convex/values").VLiteral<"manual", "required">], "required", never>;
+        triggerRuleId: import("convex/values").VId<import("convex/values").GenericId<"customRules"> | undefined, "optional">;
+        targetEntity: import("convex/values").VUnion<"portfolio" | "project" | "evidence" | "standard", [import("convex/values").VLiteral<"project", "required">, import("convex/values").VLiteral<"portfolio", "required">, import("convex/values").VLiteral<"standard", "required">, import("convex/values").VLiteral<"evidence", "required">], "required", never>;
+        steps: import("convex/values").VArray<{
+            conditions?: any[] | undefined;
+            assigneeRole?: string | undefined;
+            assigneeId?: import("convex/values").GenericId<"users"> | undefined;
+            dueDateOffset?: number | undefined;
+            escalationAfter?: number | undefined;
+            escalationTo?: import("convex/values").GenericId<"users"> | undefined;
+            actions?: any[] | undefined;
+            nextStepId?: string | undefined;
+            name: string;
+            type: "evidence_request" | "approval" | "notification" | "escalation" | "condition_check";
+            stepId: string;
+        }[], import("convex/values").VObject<{
+            conditions?: any[] | undefined;
+            assigneeRole?: string | undefined;
+            assigneeId?: import("convex/values").GenericId<"users"> | undefined;
+            dueDateOffset?: number | undefined;
+            escalationAfter?: number | undefined;
+            escalationTo?: import("convex/values").GenericId<"users"> | undefined;
+            actions?: any[] | undefined;
+            nextStepId?: string | undefined;
+            name: string;
+            type: "evidence_request" | "approval" | "notification" | "escalation" | "condition_check";
+            stepId: string;
+        }, {
+            stepId: import("convex/values").VString<string, "required">;
+            name: import("convex/values").VString<string, "required">;
+            type: import("convex/values").VUnion<"evidence_request" | "approval" | "notification" | "escalation" | "condition_check", [import("convex/values").VLiteral<"evidence_request", "required">, import("convex/values").VLiteral<"approval", "required">, import("convex/values").VLiteral<"notification", "required">, import("convex/values").VLiteral<"escalation", "required">, import("convex/values").VLiteral<"condition_check", "required">], "required", never>;
+            assigneeRole: import("convex/values").VString<string | undefined, "optional">;
+            assigneeId: import("convex/values").VId<import("convex/values").GenericId<"users"> | undefined, "optional">;
+            dueDateOffset: import("convex/values").VFloat64<number | undefined, "optional">;
+            escalationAfter: import("convex/values").VFloat64<number | undefined, "optional">;
+            escalationTo: import("convex/values").VId<import("convex/values").GenericId<"users"> | undefined, "optional">;
+            conditions: import("convex/values").VArray<any[] | undefined, import("convex/values").VAny<any, "required", string>, "optional">;
+            actions: import("convex/values").VArray<any[] | undefined, import("convex/values").VAny<any, "required", string>, "optional">;
+            nextStepId: import("convex/values").VString<string | undefined, "optional">;
+        }, "required", "name" | "type" | "conditions" | "stepId" | "assigneeRole" | "assigneeId" | "dueDateOffset" | "escalationAfter" | "escalationTo" | "actions" | "nextStepId">, "required">;
+        isActive: import("convex/values").VBoolean<boolean, "required">;
+        version: import("convex/values").VFloat64<number, "required">;
+        createdBy: import("convex/values").VId<import("convex/values").GenericId<"users">, "required">;
+        createdAt: import("convex/values").VFloat64<number, "required">;
+        updatedAt: import("convex/values").VFloat64<number, "required">;
+    }, "required", "name" | "description" | "createdAt" | "updatedAt" | "version" | "isActive" | "targetEntity" | "createdBy" | "triggerType" | "triggerRuleId" | "steps">, {
+        by_trigger_type: ["triggerType", "_creationTime"];
+        by_target_entity: ["targetEntity", "_creationTime"];
+        by_active: ["isActive", "_creationTime"];
+        by_created_by: ["createdBy", "_creationTime"];
+        by_created_at: ["createdAt", "_creationTime"];
+    }, {}, {}>;
+    workflowInstances: import("convex/server").TableDefinition<import("convex/values").VObject<{
+        completedAt?: number | undefined;
+        currentAssignee?: import("convex/values").GenericId<"users"> | undefined;
+        nextDueDate?: number | undefined;
+        metadata?: any;
+        status: "active" | "completed" | "paused" | "cancelled" | "escalated";
+        createdAt: number;
+        updatedAt: number;
+        startedAt: number;
+        workflowId: import("convex/values").GenericId<"complianceWorkflows">;
+        entityId: string;
+        currentStepId: string;
+        startedBy: import("convex/values").GenericId<"users">;
+        escalationLevel: number;
+    }, {
+        workflowId: import("convex/values").VId<import("convex/values").GenericId<"complianceWorkflows">, "required">;
+        entityId: import("convex/values").VString<string, "required">;
+        currentStepId: import("convex/values").VString<string, "required">;
+        status: import("convex/values").VUnion<"active" | "completed" | "paused" | "cancelled" | "escalated", [import("convex/values").VLiteral<"active", "required">, import("convex/values").VLiteral<"paused", "required">, import("convex/values").VLiteral<"completed", "required">, import("convex/values").VLiteral<"cancelled", "required">, import("convex/values").VLiteral<"escalated", "required">], "required", never>;
+        startedBy: import("convex/values").VId<import("convex/values").GenericId<"users">, "required">;
+        startedAt: import("convex/values").VFloat64<number, "required">;
+        completedAt: import("convex/values").VFloat64<number | undefined, "optional">;
+        currentAssignee: import("convex/values").VId<import("convex/values").GenericId<"users"> | undefined, "optional">;
+        nextDueDate: import("convex/values").VFloat64<number | undefined, "optional">;
+        escalationLevel: import("convex/values").VFloat64<number, "required">;
+        metadata: import("convex/values").VAny<any, "optional", string>;
+        createdAt: import("convex/values").VFloat64<number, "required">;
+        updatedAt: import("convex/values").VFloat64<number, "required">;
+    }, "required", "status" | "createdAt" | "updatedAt" | "startedAt" | "completedAt" | "workflowId" | "entityId" | "currentStepId" | "startedBy" | "currentAssignee" | "nextDueDate" | "escalationLevel" | "metadata" | `metadata.${string}`>, {
+        by_workflow: ["workflowId", "_creationTime"];
+        by_entity: ["entityId", "_creationTime"];
+        by_status: ["status", "_creationTime"];
+        by_current_assignee: ["currentAssignee", "_creationTime"];
+        by_next_due_date: ["nextDueDate", "_creationTime"];
+        by_created_at: ["createdAt", "_creationTime"];
+    }, {}, {}>;
+    workflowSteps: import("convex/server").TableDefinition<import("convex/values").VObject<{
+        notes?: string | undefined;
+        completedAt?: number | undefined;
+        assigneeId?: import("convex/values").GenericId<"users"> | undefined;
+        metadata?: any;
+        dueDate?: number | undefined;
+        completedBy?: import("convex/values").GenericId<"users"> | undefined;
+        status: "completed" | "in_progress" | "pending" | "escalated" | "skipped";
+        createdAt: number;
+        updatedAt: number;
+        stepId: string;
+        instanceId: import("convex/values").GenericId<"workflowInstances">;
+        stepName: string;
+        stepType: "evidence_request" | "approval" | "notification" | "escalation" | "condition_check";
+    }, {
+        instanceId: import("convex/values").VId<import("convex/values").GenericId<"workflowInstances">, "required">;
+        stepId: import("convex/values").VString<string, "required">;
+        stepName: import("convex/values").VString<string, "required">;
+        stepType: import("convex/values").VUnion<"evidence_request" | "approval" | "notification" | "escalation" | "condition_check", [import("convex/values").VLiteral<"evidence_request", "required">, import("convex/values").VLiteral<"approval", "required">, import("convex/values").VLiteral<"notification", "required">, import("convex/values").VLiteral<"escalation", "required">, import("convex/values").VLiteral<"condition_check", "required">], "required", never>;
+        assigneeId: import("convex/values").VId<import("convex/values").GenericId<"users"> | undefined, "optional">;
+        status: import("convex/values").VUnion<"completed" | "in_progress" | "pending" | "escalated" | "skipped", [import("convex/values").VLiteral<"pending", "required">, import("convex/values").VLiteral<"in_progress", "required">, import("convex/values").VLiteral<"completed", "required">, import("convex/values").VLiteral<"escalated", "required">, import("convex/values").VLiteral<"skipped", "required">], "required", never>;
+        dueDate: import("convex/values").VFloat64<number | undefined, "optional">;
+        completedAt: import("convex/values").VFloat64<number | undefined, "optional">;
+        completedBy: import("convex/values").VId<import("convex/values").GenericId<"users"> | undefined, "optional">;
+        notes: import("convex/values").VString<string | undefined, "optional">;
+        metadata: import("convex/values").VAny<any, "optional", string>;
+        createdAt: import("convex/values").VFloat64<number, "required">;
+        updatedAt: import("convex/values").VFloat64<number, "required">;
+    }, "required", "status" | "createdAt" | "updatedAt" | "notes" | "completedAt" | "stepId" | "assigneeId" | "metadata" | `metadata.${string}` | "instanceId" | "stepName" | "stepType" | "dueDate" | "completedBy">, {
+        by_instance: ["instanceId", "_creationTime"];
+        by_step_id: ["stepId", "_creationTime"];
+        by_status: ["status", "_creationTime"];
+        by_assignee: ["assigneeId", "_creationTime"];
+        by_due_date: ["dueDate", "_creationTime"];
+    }, {}, {}>;
+    workflowEscalations: import("convex/server").TableDefinition<import("convex/values").VObject<{
+        createdAt: number;
+        stepId: string;
+        escalationLevel: number;
+        instanceId: import("convex/values").GenericId<"workflowInstances">;
+        escalatedFrom: import("convex/values").GenericId<"users">;
+        escalatedTo: import("convex/values").GenericId<"users">;
+        reason: string;
+    }, {
+        instanceId: import("convex/values").VId<import("convex/values").GenericId<"workflowInstances">, "required">;
+        stepId: import("convex/values").VString<string, "required">;
+        escalatedFrom: import("convex/values").VId<import("convex/values").GenericId<"users">, "required">;
+        escalatedTo: import("convex/values").VId<import("convex/values").GenericId<"users">, "required">;
+        reason: import("convex/values").VString<string, "required">;
+        escalationLevel: import("convex/values").VFloat64<number, "required">;
+        createdAt: import("convex/values").VFloat64<number, "required">;
+    }, "required", "createdAt" | "stepId" | "escalationLevel" | "instanceId" | "escalatedFrom" | "escalatedTo" | "reason">, {
+        by_instance: ["instanceId", "_creationTime"];
+        by_step: ["stepId", "_creationTime"];
+        by_escalated_to: ["escalatedTo", "_creationTime"];
+        by_created_at: ["createdAt", "_creationTime"];
+    }, {}, {}>;
+    workflowAnalytics: import("convex/server").TableDefinition<import("convex/values").VObject<{
+        createdAt: number;
+        workflowId: import("convex/values").GenericId<"complianceWorkflows">;
+        instanceCount: number;
+        averageCompletionTime: number;
+        escalationRate: number;
+        stepCompletionRates: {
+            stepId: string;
+            completionRate: number;
+            averageTime: number;
+        }[];
+        periodStart: number;
+        periodEnd: number;
+    }, {
+        workflowId: import("convex/values").VId<import("convex/values").GenericId<"complianceWorkflows">, "required">;
+        instanceCount: import("convex/values").VFloat64<number, "required">;
+        averageCompletionTime: import("convex/values").VFloat64<number, "required">;
+        escalationRate: import("convex/values").VFloat64<number, "required">;
+        stepCompletionRates: import("convex/values").VArray<{
+            stepId: string;
+            completionRate: number;
+            averageTime: number;
+        }[], import("convex/values").VObject<{
+            stepId: string;
+            completionRate: number;
+            averageTime: number;
+        }, {
+            stepId: import("convex/values").VString<string, "required">;
+            completionRate: import("convex/values").VFloat64<number, "required">;
+            averageTime: import("convex/values").VFloat64<number, "required">;
+        }, "required", "stepId" | "completionRate" | "averageTime">, "required">;
+        periodStart: import("convex/values").VFloat64<number, "required">;
+        periodEnd: import("convex/values").VFloat64<number, "required">;
+        createdAt: import("convex/values").VFloat64<number, "required">;
+    }, "required", "createdAt" | "workflowId" | "instanceCount" | "averageCompletionTime" | "escalationRate" | "stepCompletionRates" | "periodStart" | "periodEnd">, {
+        by_workflow: ["workflowId", "_creationTime"];
+        by_period: ["periodStart", "periodEnd", "_creationTime"];
+    }, {}, {}>;
 }, true>;
 export default _default;
 //# sourceMappingURL=schema.d.ts.map

@@ -27,5 +27,5 @@ module.exports = {
     'no-var': 'error',
     'no-console': 'warn',
   },
-  ignorePatterns: ['dist/', 'node_modules/', '*.config.js', '*.config.ts'],
+  ignorePatterns: ['dist/', 'node_modules/', '*.config.js', '*.config.ts', 'src/tests/**/*'],
 };

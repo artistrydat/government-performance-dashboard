@@ -9,10 +9,15 @@ transforming...
 ├─ ✔︎ 2 themes added		https://daisyui.com/docs/themes
 ╰─ ★ Star daisyUI on GitHub	https://github.com/saadeghi/daisyui
 
-✓ 131 modules transformed.
+✓ 140 modules transformed.
 rendering chunks...
 computing gzip size...
-dist/index.html                   0.49 kB │ gzip:  0.32 kB
-dist/assets/index-De2WybsB.css  111.03 kB │ gzip: 16.68 kB
-dist/assets/index-CN3lf7PJ.js   334.83 kB │ gzip: 91.54 kB │ map: 1,239.01 kB
-✓ built in 6.92s
+dist/index.html                   0.49 kB │ gzip:   0.32 kB
+dist/assets/index-BohHMERh.css  115.74 kB │ gzip:  17.36 kB
+dist/assets/index-Cb5PlyEq.js   540.05 kB │ gzip: 160.21 kB │ map: 2,141.04 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 8.04s
