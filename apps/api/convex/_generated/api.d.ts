@@ -9,9 +9,12 @@
  */
 
 import type * as automatedCompliance from "../automatedCompliance.js";
+import type * as complianceAnalytics from "../complianceAnalytics.js";
 import type * as complianceDashboard from "../complianceDashboard.js";
 import type * as complianceEvaluations from "../complianceEvaluations.js";
 import type * as complianceReports from "../complianceReports.js";
+import type * as complianceWorkflows from "../complianceWorkflows.js";
+import type * as customRules from "../customRules.js";
 import type * as evaluationEngine from "../evaluationEngine.js";
 import type * as evidenceManagement from "../evidenceManagement.js";
 import type * as pmiStandardCriteria from "../pmiStandardCriteria.js";
@@ -41,9 +44,12 @@ import type {
  */
 declare const fullApi: ApiFromModules<{
   automatedCompliance: typeof automatedCompliance;
+  complianceAnalytics: typeof complianceAnalytics;
   complianceDashboard: typeof complianceDashboard;
   complianceEvaluations: typeof complianceEvaluations;
   complianceReports: typeof complianceReports;
+  complianceWorkflows: typeof complianceWorkflows;
+  customRules: typeof customRules;
   evaluationEngine: typeof evaluationEngine;
   evidenceManagement: typeof evidenceManagement;
   pmiStandardCriteria: typeof pmiStandardCriteria;

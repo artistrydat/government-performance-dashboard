@@ -31,11 +31,39 @@ export const seedAll = mutation({
         department: 'PMO',
       },
       {
+        mockId: 'po-002',
+        name: 'Senior Project Officer',
+        email: 'senior.po@example.com',
+        role: 'project_officer' as const,
+        department: 'PMO',
+      },
+      {
+        mockId: 'po-003',
+        name: 'Junior Project Officer',
+        email: 'junior.po@example.com',
+        role: 'project_officer' as const,
+        department: 'PMO',
+      },
+      {
+        mockId: 'pm-002',
+        name: 'Senior Portfolio Manager',
+        email: 'senior.pm@example.com',
+        role: 'portfolio_manager' as const,
+        department: 'PMO',
+      },
+      {
         mockId: 'admin-001',
         name: 'Administrator',
         email: 'admin@example.com',
         role: 'executive' as const,
         department: 'IT',
+      },
+      {
+        mockId: 'audit-001',
+        name: 'Compliance Auditor',
+        email: 'auditor@example.com',
+        role: 'executive' as const,
+        department: 'Compliance',
       },
     ];
 
@@ -81,6 +109,16 @@ export const seedAll = mutation({
       throw new Error('Portfolio manager user not found after seeding.');
     }
 
+    // Get senior portfolio manager user
+    const seniorPortfolioManager = await ctx.db
+      .query('users')
+      .withIndex('by_email', q => q.eq('email', 'senior.pm@example.com'))
+      .first();
+
+    if (!seniorPortfolioManager) {
+      throw new Error('Senior portfolio manager user not found after seeding.');
+    }
+
     // Seed portfolios
     const portfolios = [
       {
@@ -122,6 +160,32 @@ export const seedAll = mutation({
           projectCount: 6,
         },
       },
+      {
+        name: 'Customer Experience',
+        description: 'Customer-facing applications and service improvements',
+        ownerId: seniorPortfolioManager._id,
+        healthScore: 88,
+        totalBudget: 2500000,
+        allocatedBudget: 1900000,
+        resourceAllocation: {
+          teamMembers: 10,
+          budgetUtilization: 76,
+          projectCount: 4,
+        },
+      },
+      {
+        name: 'Data Analytics',
+        description: 'Business intelligence and data-driven decision making',
+        ownerId: seniorPortfolioManager._id,
+        healthScore: 79,
+        totalBudget: 1800000,
+        allocatedBudget: 1400000,
+        resourceAllocation: {
+          teamMembers: 7,
+          budgetUtilization: 78,
+          projectCount: 3,
+        },
+      },
     ];
 
     const seededPortfolios = [];
@@ -139,14 +203,24 @@ export const seedAll = mutation({
       }
     }
 
-    // Get project officer user
+    // Get project officer users
     const projectOfficer = await ctx.db
       .query('users')
       .withIndex('by_email', q => q.eq('email', 'project.officer@example.com'))
       .first();
 
-    if (!projectOfficer) {
-      throw new Error('Project officer user not found after seeding.');
+    const seniorProjectOfficer = await ctx.db
+      .query('users')
+      .withIndex('by_email', q => q.eq('email', 'senior.po@example.com'))
+      .first();
+
+    const juniorProjectOfficer = await ctx.db
+      .query('users')
+      .withIndex('by_email', q => q.eq('email', 'junior.po@example.com'))
+      .first();
+
+    if (!projectOfficer || !seniorProjectOfficer || !juniorProjectOfficer) {
+      throw new Error('Project officer users not found after seeding.');
     }
 
     // Seed projects
@@ -180,7 +254,7 @@ export const seedAll = mutation({
         },
         portfolioId: seededPortfolios[0]._id,
         ownerId: projectOfficer._id,
-        teamMembers: [projectOfficer._id],
+        teamMembers: [projectOfficer._id, juniorProjectOfficer._id],
         healthScore: 78,
         riskLevel: 'medium' as const,
         tags: ['digital', 'crm', 'customer-service'],
@@ -209,7 +283,7 @@ export const seedAll = mutation({
         },
         portfolioId: seededPortfolios[2]._id,
         ownerId: projectOfficer._id,
-        teamMembers: [projectOfficer._id],
+        teamMembers: [projectOfficer._id, seniorProjectOfficer._id],
         healthScore: 85,
         riskLevel: 'low' as const,
         tags: ['security', 'infrastructure', 'compliance'],
@@ -243,10 +317,107 @@ export const seedAll = mutation({
         },
         portfolioId: seededPortfolios[0]._id,
         ownerId: projectOfficer._id,
-        teamMembers: [projectOfficer._id],
+        teamMembers: [projectOfficer._id, juniorProjectOfficer._id],
         healthScore: 65,
         riskLevel: 'high' as const,
         tags: ['mobile', 'app', 'customer-facing'],
+      },
+      {
+        name: 'Customer Portal Redesign',
+        description: 'Redesign customer self-service portal with modern UX',
+        status: 'active' as const,
+        budget: 750000,
+        spentBudget: 320000,
+        timeline: {
+          startDate: Date.now() - 30 * 24 * 60 * 60 * 1000,
+          endDate: Date.now() + 90 * 24 * 60 * 60 * 1000,
+          milestones: [
+            {
+              name: 'UX Research',
+              date: Date.now() - 15 * 24 * 60 * 60 * 1000,
+              status: 'completed',
+            },
+            {
+              name: 'Wireframe Design',
+              date: Date.now() + 30 * 24 * 60 * 60 * 1000,
+              status: 'in-progress',
+            },
+          ],
+        },
+        portfolioId: seededPortfolios[3]._id,
+        ownerId: seniorProjectOfficer._id,
+        teamMembers: [seniorProjectOfficer._id, juniorProjectOfficer._id],
+        healthScore: 82,
+        riskLevel: 'medium' as const,
+        tags: ['customer-experience', 'ui-ux', 'portal'],
+      },
+      {
+        name: 'Data Warehouse Implementation',
+        description: 'Build centralized data warehouse for business intelligence',
+        status: 'active' as const,
+        budget: 2000000,
+        spentBudget: 1200000,
+        timeline: {
+          startDate: Date.now() - 180 * 24 * 60 * 60 * 1000,
+          endDate: Date.now() + 120 * 24 * 60 * 60 * 1000,
+          milestones: [
+            {
+              name: 'Data Architecture',
+              date: Date.now() - 120 * 24 * 60 * 60 * 1000,
+              status: 'completed',
+            },
+            {
+              name: 'ETL Development',
+              date: Date.now() - 60 * 24 * 60 * 60 * 1000,
+              status: 'completed',
+            },
+            {
+              name: 'Data Migration',
+              date: Date.now() + 30 * 24 * 60 * 60 * 1000,
+              status: 'in-progress',
+            },
+          ],
+        },
+        portfolioId: seededPortfolios[4]._id,
+        ownerId: seniorProjectOfficer._id,
+        teamMembers: [seniorProjectOfficer._id, projectOfficer._id],
+        healthScore: 76,
+        riskLevel: 'medium' as const,
+        tags: ['data-analytics', 'warehouse', 'bi'],
+      },
+      {
+        name: 'GDPR Compliance Audit',
+        description: 'Conduct comprehensive GDPR compliance audit and remediation',
+        status: 'completed' as const,
+        budget: 500000,
+        spentBudget: 480000,
+        timeline: {
+          startDate: Date.now() - 365 * 24 * 60 * 60 * 1000,
+          endDate: Date.now() - 60 * 24 * 60 * 60 * 1000,
+          milestones: [
+            {
+              name: 'Initial Assessment',
+              date: Date.now() - 300 * 24 * 60 * 60 * 1000,
+              status: 'completed',
+            },
+            {
+              name: 'Remediation Phase',
+              date: Date.now() - 180 * 24 * 60 * 60 * 1000,
+              status: 'completed',
+            },
+            {
+              name: 'Final Certification',
+              date: Date.now() - 60 * 24 * 60 * 60 * 1000,
+              status: 'completed',
+            },
+          ],
+        },
+        portfolioId: seededPortfolios[2]._id,
+        ownerId: projectOfficer._id,
+        teamMembers: [projectOfficer._id, juniorProjectOfficer._id],
+        healthScore: 95,
+        riskLevel: 'low' as const,
+        tags: ['compliance', 'gdpr', 'audit', 'security'],
       },
     ];
 
@@ -607,8 +778,19 @@ export const seedAll = mutation({
       }
     }
 
-    // Seed some initial compliance evaluations for existing projects
+    // Get compliance auditor user
+    const complianceAuditor = await ctx.db
+      .query('users')
+      .withIndex('by_email', q => q.eq('email', 'auditor@example.com'))
+      .first();
+
+    if (!complianceAuditor) {
+      throw new Error('Compliance auditor user not found after seeding.');
+    }
+
+    // Seed comprehensive compliance evaluations for testing Epic 3
     const complianceEvaluations = [
+      // CRM System Implementation evaluations
       {
         projectId: seededProjects[0]._id, // CRM System Implementation
         standardId: seededStandards[0]._id, // Project Charter
@@ -618,17 +800,174 @@ export const seedAll = mutation({
       },
       {
         projectId: seededProjects[0]._id,
+        standardId: seededStandards[1]._id, // Stakeholder Engagement
+        overallScore: 72,
+        evaluatorId: portfolioManager._id,
+        notes: 'Communication plan in place, but engagement metrics lacking',
+      },
+      {
+        projectId: seededProjects[0]._id,
+        standardId: seededStandards[2]._id, // Scope Management
+        overallScore: 88,
+        evaluatorId: portfolioManager._id,
+        notes: 'Well-defined requirements, change control process established',
+      },
+      {
+        projectId: seededProjects[0]._id,
         standardId: seededStandards[3]._id, // Risk Management
         overallScore: 78,
         evaluatorId: portfolioManager._id,
         notes: 'Good risk identification, needs improved response planning',
       },
+
+      // Network Security Upgrade evaluations
       {
         projectId: seededProjects[1]._id, // Network Security Upgrade
+        standardId: seededStandards[0]._id, // Project Charter
+        overallScore: 95,
+        evaluatorId: complianceAuditor._id,
+        notes: 'Excellent project charter with clear business justification',
+      },
+      {
+        projectId: seededProjects[1]._id,
         standardId: seededStandards[2]._id, // Scope Management
         overallScore: 92,
-        evaluatorId: portfolioManager._id,
+        evaluatorId: complianceAuditor._id,
         notes: 'Excellent scope documentation and change control',
+      },
+      {
+        projectId: seededProjects[1]._id,
+        standardId: seededStandards[3]._id, // Risk Management
+        overallScore: 89,
+        evaluatorId: complianceAuditor._id,
+        notes: 'Comprehensive risk management with effective mitigation',
+      },
+      {
+        projectId: seededProjects[1]._id,
+        standardId: seededStandards[4]._id, // Portfolio Governance
+        overallScore: 91,
+        evaluatorId: complianceAuditor._id,
+        notes: 'Strong alignment with portfolio strategy and governance',
+      },
+
+      // Mobile App Development evaluations
+      {
+        projectId: seededProjects[2]._id, // Mobile App Development
+        standardId: seededStandards[0]._id, // Project Charter
+        overallScore: 65,
+        evaluatorId: portfolioManager._id,
+        notes: 'Business case needs stronger ROI justification',
+      },
+      {
+        projectId: seededProjects[2]._id,
+        standardId: seededStandards[1]._id, // Stakeholder Engagement
+        overallScore: 58,
+        evaluatorId: portfolioManager._id,
+        notes: 'Limited stakeholder engagement and communication planning',
+      },
+      {
+        projectId: seededProjects[2]._id,
+        standardId: seededStandards[2]._id, // Scope Management
+        overallScore: 70,
+        evaluatorId: portfolioManager._id,
+        notes: 'Scope creep issues, change control process not consistently followed',
+      },
+      {
+        projectId: seededProjects[2]._id,
+        standardId: seededStandards[3]._id, // Risk Management
+        overallScore: 45,
+        evaluatorId: portfolioManager._id,
+        notes: 'Critical risks identified late, inadequate response planning',
+      },
+
+      // Customer Portal Redesign evaluations
+      {
+        projectId: seededProjects[3]._id, // Customer Portal Redesign
+        standardId: seededStandards[0]._id, // Project Charter
+        overallScore: 82,
+        evaluatorId: seniorPortfolioManager._id,
+        notes: 'Solid business case with clear user value proposition',
+      },
+      {
+        projectId: seededProjects[3]._id,
+        standardId: seededStandards[1]._id, // Stakeholder Engagement
+        overallScore: 85,
+        evaluatorId: seniorPortfolioManager._id,
+        notes: 'Strong customer engagement and feedback mechanisms',
+      },
+      {
+        projectId: seededProjects[3]._id,
+        standardId: seededStandards[2]._id, // Scope Management
+        overallScore: 78,
+        evaluatorId: seniorPortfolioManager._id,
+        notes: 'Good scope definition, some ambiguity in requirements',
+      },
+
+      // Data Warehouse Implementation evaluations
+      {
+        projectId: seededProjects[4]._id, // Data Warehouse Implementation
+        standardId: seededStandards[0]._id, // Project Charter
+        overallScore: 88,
+        evaluatorId: seniorPortfolioManager._id,
+        notes: 'Strong strategic alignment with data-driven objectives',
+      },
+      {
+        projectId: seededProjects[4]._id,
+        standardId: seededStandards[2]._id, // Scope Management
+        overallScore: 75,
+        evaluatorId: seniorPortfolioManager._id,
+        notes: 'Complex scope, managing well given technical complexity',
+      },
+      {
+        projectId: seededProjects[4]._id,
+        standardId: seededStandards[3]._id, // Risk Management
+        overallScore: 80,
+        evaluatorId: seniorPortfolioManager._id,
+        notes: 'Good risk identification in data migration and quality',
+      },
+      {
+        projectId: seededProjects[4]._id,
+        standardId: seededStandards[4]._id, // Portfolio Governance
+        overallScore: 85,
+        evaluatorId: seniorPortfolioManager._id,
+        notes: 'Excellent portfolio alignment and governance adherence',
+      },
+
+      // GDPR Compliance Audit evaluations (completed project)
+      {
+        projectId: seededProjects[5]._id, // GDPR Compliance Audit
+        standardId: seededStandards[0]._id, // Project Charter
+        overallScore: 98,
+        evaluatorId: complianceAuditor._id,
+        notes: 'Perfect project charter with regulatory compliance focus',
+      },
+      {
+        projectId: seededProjects[5]._id,
+        standardId: seededStandards[1]._id, // Stakeholder Engagement
+        overallScore: 95,
+        evaluatorId: complianceAuditor._id,
+        notes: 'Excellent stakeholder communication and legal team engagement',
+      },
+      {
+        projectId: seededProjects[5]._id,
+        standardId: seededStandards[2]._id, // Scope Management
+        overallScore: 96,
+        evaluatorId: complianceAuditor._id,
+        notes: 'Perfect scope management for regulatory requirements',
+      },
+      {
+        projectId: seededProjects[5]._id,
+        standardId: seededStandards[3]._id, // Risk Management
+        overallScore: 97,
+        evaluatorId: complianceAuditor._id,
+        notes: 'Comprehensive risk management for compliance risks',
+      },
+      {
+        projectId: seededProjects[5]._id,
+        standardId: seededStandards[4]._id, // Portfolio Governance
+        overallScore: 99,
+        evaluatorId: complianceAuditor._id,
+        notes: 'Perfect alignment with compliance portfolio strategy',
       },
     ];
 
