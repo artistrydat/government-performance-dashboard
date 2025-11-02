@@ -636,4 +636,52 @@ export default defineSchema({
     .index('by_version', ['version'])
     .index('by_created_by', ['createdBy'])
     .index('by_previous_version', ['previousVersionId']),
+
+  // Batch Prediction Jobs table for Story 4.2.2
+  batch_prediction_jobs: defineTable({
+    batchId: v.string(),
+    projectIds: v.array(v.id('projects')),
+    predictionTypes: v.array(
+      v.union(
+        v.literal('failure'),
+        v.literal('delay'),
+        v.literal('budget'),
+        v.literal('compliance')
+      )
+    ),
+    status: v.union(
+      v.literal('pending'),
+      v.literal('processing'),
+      v.literal('completed'),
+      v.literal('failed'),
+      v.literal('cancelled')
+    ),
+    progress: v.object({
+      total: v.number(),
+      processed: v.number(),
+      failed: v.number(),
+    }),
+    results: v.array(
+      v.object({
+        projectId: v.string(),
+        status: v.union(v.literal('success'), v.literal('failed'), v.literal('skipped')),
+        predictions: v.array(
+          v.object({
+            type: v.string(),
+            predictionId: v.optional(v.string()),
+            confidence: v.number(),
+            error: v.optional(v.string()),
+          })
+        ),
+      })
+    ),
+    startedAt: v.number(),
+    completedAt: v.optional(v.number()),
+    initiatedBy: v.id('users'),
+    priority: v.union(v.literal('low'), v.literal('medium'), v.literal('high')),
+  })
+    .index('by_batch_id', ['batchId'])
+    .index('by_status', ['status'])
+    .index('by_initiated_by', ['initiatedBy'])
+    .index('by_started_at', ['startedAt']),
 });

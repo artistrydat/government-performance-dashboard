@@ -11,6 +11,7 @@
 import type * as aiPredictions from "../aiPredictions.js";
 import type * as aiService from "../aiService.js";
 import type * as automatedCompliance from "../automatedCompliance.js";
+import type * as batchPredictionProcessing from "../batchPredictionProcessing.js";
 import type * as complianceAnalytics from "../complianceAnalytics.js";
 import type * as complianceDashboard from "../complianceDashboard.js";
 import type * as complianceEvaluations from "../complianceEvaluations.js";
@@ -48,6 +49,7 @@ declare const fullApi: ApiFromModules<{
   aiPredictions: typeof aiPredictions;
   aiService: typeof aiService;
   automatedCompliance: typeof automatedCompliance;
+  batchPredictionProcessing: typeof batchPredictionProcessing;
   complianceAnalytics: typeof complianceAnalytics;
   complianceDashboard: typeof complianceDashboard;
   complianceEvaluations: typeof complianceEvaluations;
