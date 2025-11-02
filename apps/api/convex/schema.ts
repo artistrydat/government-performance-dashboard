@@ -617,14 +617,23 @@ export default defineSchema({
     timeHorizon: v.number(),
     reasoning: v.string(),
     recommendations: v.array(v.string()),
-    generatedAt: v.number(),
-    isActive: v.boolean(),
-    projectId: v.id('projects'),
+    evidenceReferences: v.array(v.string()),
     modelUsed: v.string(),
+    modelVersion: v.string(),
+    generationTimestamp: v.number(),
+    status: v.union(v.literal('active'), v.literal('inactive'), v.literal('archived')),
+    version: v.number(),
+    previousVersionId: v.optional(v.id('ai_predictions')),
+    projectId: v.id('projects'),
+    createdBy: v.id('users'),
+    metadata: v.optional(v.any()),
   })
     .index('by_project', ['projectId'])
     .index('by_type', ['type'])
     .index('by_confidence', ['confidence'])
-    .index('by_generated_at', ['generatedAt'])
-    .index('by_active', ['isActive']),
+    .index('by_generation_timestamp', ['generationTimestamp'])
+    .index('by_status', ['status'])
+    .index('by_version', ['version'])
+    .index('by_created_by', ['createdBy'])
+    .index('by_previous_version', ['previousVersionId']),
 });
